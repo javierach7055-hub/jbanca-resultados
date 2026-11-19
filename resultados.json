@@ -1,6 +1,6 @@
 {
   "date": "2026-11-19",
-  "updatedAt": "2026-11-19T20:32:23.280Z",
+  "updatedAt": "2026-11-19T20:34:38.356Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -463,6 +463,12 @@
       "drawTime": "16:15",
       "animalNum": "43",
       "animalName": "Mariposa"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "16:30",
+      "animalNum": "30",
+      "animalName": "Caiman"
     }
   ]
 }
