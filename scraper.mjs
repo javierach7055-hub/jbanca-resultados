@@ -1,23 +1,24 @@
 import fs from 'node:fs';
 import { chromium } from 'playwright-core';
 
-function mapLotteryId(h3Text) {
-  const n = String(h3Text || '')
+function mapLotteryId(line) {
+  const n = String(line || '')
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .trim();
 
-  if (n.includes('guacharito')) return 'guacharito_millonario';
-  if (n.includes('guacharo')) return 'guacharo_activo';
-  if (n.includes('la granjita')) return 'la_granjita';
-  if (n.includes('lotto activo int') || n.includes('lotto internacional')) return 'lotto_internacional';
-  if (n.includes('lotto activo rd') || n.includes('lotto rd')) return 'lotto_rd';
-  if (n === 'lotto activo' || (n.includes('lotto activo') && !n.includes('2') && !n.includes('monje'))) return 'lotto_activo';
-  if (n.includes('ruleta activa')) return 'ruleta_activa';
-  if (n.includes('lotto rey')) return 'lotto_rey';
-  if (n.includes('selva plus')) return 'selva_plus';
-  if (n.includes('chance con animalitos')) return 'chance_animalitos';
+  if (n.startsWith('resultados ')) return null;
+  if (n === 'el guacharito millonario' || n === 'guacharito millonario') return 'guacharito_millonario';
+  if (n === 'guacharo activo') return 'guacharo_activo';
+  if (n === 'la granjita') return 'la_granjita';
+  if (n.startsWith('lotto activo int') || n === 'lotto internacional') return 'lotto_internacional';
+  if (n === 'lotto activo rd' || n === 'lotto rd') return 'lotto_rd';
+  if (n === 'lotto activo') return 'lotto_activo';
+  if (n === 'ruleta activa') return 'ruleta_activa';
+  if (n === 'lotto rey') return 'lotto_rey';
+  if (n === 'selva plus') return 'selva_plus';
+  if (n === 'chance con animalitos') return 'chance_animalitos';
   return null;
 }
 
@@ -32,7 +33,7 @@ function getCaracasDate() {
 
 function normalizeTime24(rawTime) {
   const clean = String(rawTime || '').trim().toUpperCase();
-  const match = clean.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/);
+  const match = clean.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/);
   if (!match) return null;
   const [, rawH, min, meridiem] = match;
   let hour = parseInt(rawH, 10);
@@ -54,69 +55,76 @@ async function run() {
     } catch {}
   }
 
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({
+    headless: true,
+    args: ['--disable-blink-features=AutomationControlled', '--no-sandbox']
+  });
   const context = await browser.newContext({
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
-    locale: 'es-VE'
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+    locale: 'es-VE',
+    viewport: { width: 1366, height: 768 }
   });
   const page = await context.newPage();
 
   await page.goto('https://loteriadehoy.com', {
-    waitUntil: 'networkidle',
+    waitUntil: 'domcontentloaded',
     timeout: 45000
   });
-  await page.waitForSelector('h3', { timeout: 20000 });
 
-  // Recorre todos los encabezados h3, h4, h5 en orden lineal de la página
-  const rawItems = await page.evaluate(() => {
-    const nodes = Array.from(document.querySelectorAll('h3, h4, h5'));
-    const extracted = [];
-    let currentTitle = '';
-    let pendingH4 = '';
+  // Esperar 6 segundos para superar cualquier pantalla de espera de Cloudflare
+  await page.waitForTimeout(6000);
 
-    for (const node of nodes) {
-      const tag = node.tagName;
-      const text = node.textContent.replace(/\s+/g, ' ').trim();
-
-      if (tag === 'H3') {
-        currentTitle = text;
-        pendingH4 = '';
-      } else if (tag === 'H4' && currentTitle) {
-        pendingH4 = text;
-      } else if (tag === 'H5' && currentTitle && pendingH4) {
-        extracted.push({ title: currentTitle, h4: pendingH4, h5: text });
-        pendingH4 = '';
-      }
-    }
-    return extracted;
-  });
-
+  const bodyText = await page.evaluate(() => document.body.innerText || '');
   await browser.close();
 
+  const lines = bodyText
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => l.length > 0 && l !== '-');
+
+  console.log(`Total líneas leídas: ${lines.length}. Muestra:`, lines.slice(0, 15).join(' | '));
+
   const scraped = [];
-  for (const item of rawItems) {
-    const lotteryId = mapLotteryId(item.title);
-    if (!lotteryId) continue;
+  let currentLotteryId = null;
 
-    const match = item.h4.match(/^(00|0A|0B|[0-9]{1,2})\s+(.+)$/i);
-    const drawTime = normalizeTime24(item.h5);
-    if (!match || !drawTime) continue;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines.at(i);
 
-    const [, rawNum, rawName] = match;
-    let animalNum = rawNum.toUpperCase();
-    if (animalNum !== '0' && animalNum !== '00' && animalNum !== '0A' && animalNum !== '0B' && animalNum.length === 1) {
-      animalNum = animalNum.padStart(2, '0');
+    // Detectar si entramos en el pie de página
+    if (line.startsWith('Quieres hacer publicidad')) break;
+
+    const detectedLottery = mapLotteryId(line);
+    if (detectedLottery) {
+      currentLotteryId = detectedLottery;
+      continue;
     }
 
-    scraped.push({
-      lotteryId,
-      drawTime,
-      animalNum,
-      animalName: rawName.trim()
-    });
+    if (!currentLotteryId) continue;
+
+    // Verificar si la línea actual es "NUMERO ANIMAL" (ej: "11 Gato" o "00 Ballena")
+    // y la siguiente línea es una hora "HH:MM AM/PM"
+    const animalMatch = line.match(/^(00|0A|0B|[0-9]{1,2})\s+([A-Za-zÁÉÍÓÚáéíóúÑñ\s]+)$/);
+    const nextLine = lines.at(i + 1) || '';
+    const drawTime = normalizeTime24(nextLine);
+
+    if (animalMatch && drawTime) {
+      const [, rawNum, rawName] = animalMatch;
+      let animalNum = rawNum.toUpperCase();
+      if (animalNum !== '0' && animalNum !== '00' && animalNum !== '0A' && animalNum !== '0B' && animalNum.length === 1) {
+        animalNum = animalNum.padStart(2, '0');
+      }
+
+      scraped.push({
+        lotteryId: currentLotteryId,
+        drawTime,
+        animalNum,
+        animalName: rawName.trim()
+      });
+      i++; // Saltar la línea de la hora ya procesada
+    }
   }
 
-  console.log(`Resultados extraídos con Chrome real: ${scraped.length}`);
+  console.log(`Resultados extraídos: ${scraped.length}`);
 
   const map = new Map();
   for (const item of previous.results) {
