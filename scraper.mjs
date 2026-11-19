@@ -62,31 +62,30 @@ async function run() {
   const page = await context.newPage();
 
   await page.goto('https://loteriadehoy.com', {
-    waitUntil: 'domcontentloaded',
+    waitUntil: 'networkidle',
     timeout: 45000
   });
   await page.waitForSelector('h3', { timeout: 20000 });
 
+  // Recorre todos los encabezados h3, h4, h5 en orden lineal de la página
   const rawItems = await page.evaluate(() => {
+    const nodes = Array.from(document.querySelectorAll('h3, h4, h5'));
     const extracted = [];
-    const headings = Array.from(document.querySelectorAll('h3'));
+    let currentTitle = '';
+    let pendingH4 = '';
 
-    for (const h3 of headings) {
-      const title = h3.textContent.trim();
-      let el = h3.nextElementSibling;
-      while (el && el.tagName !== 'H3') {
-        const h4s = el.querySelectorAll('h4');
-        const h5s = el.querySelectorAll('h5');
-        if (h4s.length > 0 && h4s.length === h5s.length) {
-          for (let k = 0; k < h4s.length; k++) {
-            extracted.push({
-              title,
-              h4: h4s.item(k).textContent.trim(),
-              h5: h5s.item(k).textContent.trim()
-            });
-          }
-        }
-        el = el.nextElementSibling;
+    for (const node of nodes) {
+      const tag = node.tagName;
+      const text = node.textContent.replace(/\s+/g, ' ').trim();
+
+      if (tag === 'H3') {
+        currentTitle = text;
+        pendingH4 = '';
+      } else if (tag === 'H4' && currentTitle) {
+        pendingH4 = text;
+      } else if (tag === 'H5' && currentTitle && pendingH4) {
+        extracted.push({ title: currentTitle, h4: pendingH4, h5: text });
+        pendingH4 = '';
       }
     }
     return extracted;
