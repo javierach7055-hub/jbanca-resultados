@@ -1,6 +1,6 @@
 {
   "date": "2026-11-19",
-  "updatedAt": "2026-11-19T15:04:30.942Z",
+  "updatedAt": "2026-11-19T15:06:32.591Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -157,6 +157,24 @@
       "drawTime": "11:00",
       "animalNum": "31",
       "animalName": "Lapa"
+    },
+    {
+      "lotteryId": "lotto_activo",
+      "drawTime": "11:00",
+      "animalNum": "01",
+      "animalName": "Carnero"
+    },
+    {
+      "lotteryId": "guacharo_activo",
+      "drawTime": "11:00",
+      "animalNum": "43",
+      "animalName": "Mariposa"
+    },
+    {
+      "lotteryId": "chance_animalitos",
+      "drawTime": "11:00",
+      "animalNum": "06",
+      "animalName": "Sapo"
     }
   ]
 }
