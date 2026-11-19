@@ -1,18 +1,17 @@
 import fs from 'node:fs';
 
-// Cada lotería consulta SU PROPIA URL individual para que jamás se crucen resultados
-const LOTTERY_SOURCES = [
-  { id: 'lotto_activo', slug: 'lottoactivo' },
-  { id: 'la_granjita', slug: 'lagranjita' },
-  { id: 'guacharo_activo', slug: 'guacharoactivo' },
-  { id: 'guacharito_millonario', slug: 'elguacharitomillonario' },
-  { id: 'selva_plus', slug: 'selvaplus' },
-  { id: 'lotto_internacional', slug: 'lottoactivordint' },
-  { id: 'lotto_rd', slug: 'lottoactivordominicana' },
-  { id: 'chance_animalitos', slug: 'chanceconanimalitos' },
-  { id: 'ruleta_activa', slug: 'ruletaactiva' },
-  { id: 'lotto_rey', slug: 'lottorey' }
-];
+const LOTTERY_RULES = {
+  lotto_activo: { names: ['lotto activo'], minutes: ['00'], max: 36 },
+  la_granjita: { names: ['la granjita'], minutes: ['00'], max: 36 },
+  guacharo_activo: { names: ['guacharo activo'], minutes: ['00'], max: 75 },
+  guacharito_millonario: { names: ['el guacharito millonario', 'guacharito millonario'], minutes: ['30'], max: 99 },
+  selva_plus: { names: ['selva plus'], minutes: ['15', '45'], max: 36, comodines: true },
+  lotto_internacional: { names: ['lotto activo int', 'lotto activo rd int', 'lotto internacional'], minutes: ['30'], max: 36 },
+  lotto_rd: { names: ['lotto activo rd', 'lotto activo rdominicana', 'lotto rd'], minutes: ['00'], max: 36 },
+  chance_animalitos: { names: ['chance con animalitos'], minutes: ['00'], max: 36 },
+  ruleta_activa: { names: ['ruleta activa'], minutes: ['00'], max: 36 },
+  lotto_rey: { names: ['lotto rey'], minutes: ['00'], max: 36 }
+};
 
 function getCaracasDate() {
   const now = new Date();
@@ -23,8 +22,24 @@ function getCaracasDate() {
   return `${y}-${m}-${d}`;
 }
 
+function mapLotteryFromHeading(rawHeading) {
+  const clean = String(rawHeading || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\(.*?\)/g, '')
+    .trim();
+
+  if (clean.startsWith('resultados') || clean.startsWith('quieres hacer')) return null;
+
+  for (const [id, rule] of Object.entries(LOTTERY_RULES)) {
+    if (rule.names.some((n) => clean === n)) return id;
+  }
+  return null;
+}
+
 function normalizeTime24(rawTime) {
-  const clean = String(rawTime || '').replace(/^#+\s*/, '').trim().toUpperCase();
+  const clean = String(rawTime || '').trim().toUpperCase();
   const match = clean.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/);
   if (!match) return null;
   const [, rawH, min, meridiem] = match;
@@ -34,46 +49,19 @@ function normalizeTime24(rawTime) {
   return `${String(hour).padStart(2, '0')}:${min}`;
 }
 
-async function fetchLotteryResults(lotteryId, slug, dateStr) {
-  const url = ['https:/', 'r.jina.ai', 'https:/', 'loteriadehoy.com', 'animalito', slug, 'resultados', dateStr, ''].join('/');
-  const res = await fetch(url, { headers: { 'Accept': 'text/plain' } });
-  if (!res.ok) return [];
-
-  const text = await res.text();
-  const lines = text
-    .split('\n')
-    .map((l) => l.replace(/^#+\s*/, '').trim())
-    .filter((l) => l.length > 0 && l !== '-');
-
-  const found = [];
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines.at(i);
-    if (line.startsWith('Quieres hacer publicidad')) break;
-
-    const animalMatch = line.match(/^(00|0A|0B|[0-9]{1,2})\s+([A-Za-zÁÉÍÓÚáéíóúÑñ\s]+)$/);
-    const nextLine = lines.at(i + 1) || '';
-    const drawTime = normalizeTime24(nextLine);
-
-    if (animalMatch && drawTime) {
-      const [, rawNum, rawName] = animalMatch;
-      let animalNum = rawNum.toUpperCase();
-      if (animalNum !== '0' && animalNum !== '00' && animalNum !== '0A' && animalNum !== '0B' && animalNum.length === 1) {
-        animalNum = animalNum.padStart(2, '0');
-      }
-      found.push({
-        lotteryId,
-        drawTime,
-        animalNum,
-        animalName: rawName.trim()
-      });
-      i++;
-    }
-  }
-  return found;
+function isValidForLottery(lotteryId, drawTime, animalNum) {
+  const rule = LOTTERY_RULES[lotteryId];
+  if (!rule) return false;
+  const min = drawTime.split(':').at(1);
+  if (!rule.minutes.includes(min)) return false;
+  if (animalNum === '0' || animalNum === '00') return true;
+  if (rule.comodines && (animalNum === '0A' || animalNum === '0B')) return true;
+  const n = parseInt(animalNum, 10);
+  return !Number.isNaN(n) && n >= 1 && n <= rule.max;
 }
 
 async function run() {
-  // Fecha fijada en ayer (2026-11-18) para probar; luego cambiamos '2026-11-18' por getCaracasDate()
+  // Prueba con 2026-11-18; luego lo devolvemos a getCaracasDate()
   const today = '2026-11-18';
   let previous = { date: today, updatedAt: new Date().toISOString(), results: [] };
 
@@ -86,21 +74,61 @@ async function run() {
     } catch {}
   }
 
+  const url = ['https:/', 'r.jina.ai', 'https:/', 'loteriadehoy.com', 'animalitos', 'resultados', today, ''].join('/');
+  const res = await fetch(url, { headers: { 'Accept': 'text/plain' } });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const text = await res.text();
+
+  const lines = text.split('\n').map((l) => l.trim()).filter(Boolean);
+  const scraped = [];
+  let currentLotteryId = null;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines.at(i);
+
+    // Solo cambia de lotería cuando encuentra un encabezado real "### Nombre"
+    if (line.startsWith('### ')) {
+      const heading = line.slice(4).trim();
+      currentLotteryId = mapLotteryFromHeading(heading);
+      continue;
+    }
+
+    if (!currentLotteryId) continue;
+
+    // Cada tarjeta trae "#### NUMERO NOMBRE" seguido de "##### HH:MM AM/PM"
+    const cleanH4 = line.replace(/^####\s*/, '').trim();
+    const nextH5 = (lines.at(i + 1) || '').replace(/^#####\s*/, '').trim();
+
+    const animalMatch = cleanH4.match(/^(00|0A|0B|[0-9]{1,2})\s+([A-Za-zÁÉÍÓÚáéíóúÑñ\s]+)$/);
+    const drawTime = normalizeTime24(nextH5);
+
+    if (animalMatch && drawTime) {
+      const [, rawNum, rawName] = animalMatch;
+      let animalNum = rawNum.toUpperCase();
+      if (animalNum !== '0' && animalNum !== '00' && animalNum !== '0A' && animalNum !== '0B' && animalNum.length === 1) {
+        animalNum = animalNum.padStart(2, '0');
+      }
+
+      if (isValidForLottery(currentLotteryId, drawTime, animalNum)) {
+        scraped.push({
+          lotteryId: currentLotteryId,
+          drawTime,
+          animalNum,
+          animalName: rawName.trim()
+        });
+      }
+      i++;
+    }
+  }
+
+  console.log(`Resultados extraídos y verificados: ${scraped.length}`);
+
   const map = new Map();
   for (const item of previous.results) {
     map.set(`${item.lotteryId}|${item.drawTime}`, item);
   }
-
-  for (const src of LOTTERY_SOURCES) {
-    try {
-      const items = await fetchLotteryResults(src.id, src.slug, today);
-      console.log(`${src.id}: ${items.length} resultados`);
-      for (const item of items) {
-        map.set(`${item.lotteryId}|${item.drawTime}`, item);
-      }
-    } catch (err) {
-      console.warn(`Error en ${src.id}:`, err.message);
-    }
+  for (const item of scraped) {
+    map.set(`${item.lotteryId}|${item.drawTime}`, item);
   }
 
   const output = {
@@ -110,7 +138,7 @@ async function run() {
   };
 
   fs.writeFileSync('resultados.json', JSON.stringify(output, null, 2), 'utf8');
-  console.log(`Guardado resultados.json con ${output.results.length} resultados exactos para ${today}.`);
+  console.log(`Guardado resultados.json con ${output.results.length} resultados para ${today}.`);
 }
 
 run();
