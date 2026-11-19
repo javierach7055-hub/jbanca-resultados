@@ -2,7 +2,6 @@ name: Actualizar Resultados Animalitos
 
 on:
   schedule:
-    # Ejecuta cada 5 minutos entre las 8:00 AM y 9:00 PM hora Venezuela (12:00 a 01:00 UTC)
     - cron: '*/5 12-23,0-1 * * *'
   workflow_dispatch:
 
@@ -20,6 +19,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      - name: Instalar navegador headless
+        run: npm install playwright-core && npx playwright install chromium
 
       - name: Ejecutar robot de resultados
         run: node scraper.mjs
