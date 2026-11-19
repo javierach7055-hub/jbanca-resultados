@@ -73,7 +73,8 @@ async function fetchLotteryResults(lotteryId, slug, dateStr) {
 }
 
 async function run() {
-  const today = getCaracasDate();
+  // Fecha fijada en ayer (2026-11-18) para probar; luego cambiamos '2026-11-18' por getCaracasDate()
+  const today = '2026-11-18';
   let previous = { date: today, updatedAt: new Date().toISOString(), results: [] };
 
   if (fs.existsSync('resultados.json')) {
