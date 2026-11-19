@@ -1,6 +1,6 @@
 {
   "date": "2026-11-19",
-  "updatedAt": "2026-11-19T18:04:54.299Z",
+  "updatedAt": "2026-11-19T18:06:35.226Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -331,6 +331,18 @@
       "drawTime": "14:00",
       "animalNum": "48",
       "animalName": "Puercoespin"
+    },
+    {
+      "lotteryId": "la_granjita",
+      "drawTime": "14:00",
+      "animalNum": "33",
+      "animalName": "Pescado"
+    },
+    {
+      "lotteryId": "chance_animalitos",
+      "drawTime": "14:00",
+      "animalNum": "09",
+      "animalName": "Aguila"
     }
   ]
 }
