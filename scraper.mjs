@@ -1,6 +1,5 @@
 import fs from 'node:fs';
 
-// Mapeo estricto de títulos h3 de loteriadehoy.com a los IDs de JBanca Pro
 function mapLotteryId(h3Text) {
   const n = String(h3Text || '')
     .toLowerCase()
@@ -44,7 +43,6 @@ function normalizeTime24(rawTime) {
 
 function parseLoteriaDeHoy(html) {
   const results = [];
-  // Cada lotería empieza con <h3>Nombre</h3>
   const sections = html.split(/<h3[^>]*>/i);
 
   for (let i = 1; i < sections.length; i++) {
@@ -55,10 +53,7 @@ function parseLoteriaDeHoy(html) {
     const lotteryId = mapLotteryId(title);
     if (!lotteryId) continue;
 
-    // Tomar el bloque de esa lotería hasta el siguiente <h3>
     const body = sections[i].slice(closeH3 + 5);
-
-    // En loteriadehoy.com cada resultado es: <h4>NUMERO NOMBRE</h4> ... <h5>HH:MM AM/PM</h5>
     const pairRegex = /<h4[^>]*>\s*(00|0A|0B|[0-9]{1,2})\s+([^<]+)<\/h4>[\s\S]{0,300}?<h5[^>]*>\s*(\d{1,2}:\d{2}\s*(?:AM|PM))\s*<\/h5>/gi;
     let m;
     while ((m = pairRegex.exec(body)) !== null) {
@@ -91,7 +86,7 @@ async function run() {
     } catch {}
   }
 
-  const res = await fetch('https://loteriadehoy.com/animalitos/resultados/', {
+  const res = await fetch('https://loteriadehoy.com', {
     headers: {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
       'Accept': 'text/html,application/xhtml+xml'
