@@ -1,6 +1,6 @@
 {
   "date": "2026-11-19",
-  "updatedAt": "2026-11-19T18:32:35.530Z",
+  "updatedAt": "2026-11-19T18:34:50.213Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -361,6 +361,12 @@
       "drawTime": "14:30",
       "animalNum": "26",
       "animalName": "Vaca"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "14:30",
+      "animalNum": "17",
+      "animalName": "Pavo"
     }
   ]
 }
