@@ -1,8 +1,8 @@
 import fs from 'node:fs';
-import { chromium } from 'playwright-core';
 
 function mapLotteryId(line) {
   const n = String(line || '')
+    .replace(/^#+\s*/, '')
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
@@ -13,7 +13,7 @@ function mapLotteryId(line) {
   if (n === 'guacharo activo') return 'guacharo_activo';
   if (n === 'la granjita') return 'la_granjita';
   if (n.startsWith('lotto activo int') || n === 'lotto internacional') return 'lotto_internacional';
-  if (n === 'lotto activo rd' || n === 'lotto rd') return 'lotto_rd';
+  if (n === 'lotto activo rd' || n === 'lotto rd' || n === 'lotto activo rdominicana') return 'lotto_rd';
   if (n === 'lotto activo') return 'lotto_activo';
   if (n === 'ruleta activa') return 'ruleta_activa';
   if (n === 'lotto rey') return 'lotto_rey';
@@ -32,7 +32,7 @@ function getCaracasDate() {
 }
 
 function normalizeTime24(rawTime) {
-  const clean = String(rawTime || '').trim().toUpperCase();
+  const clean = String(rawTime || '').replace(/^#+\s*/, '').trim().toUpperCase();
   const match = clean.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/);
   if (!match) return null;
   const [, rawH, min, meridiem] = match;
@@ -55,42 +55,22 @@ async function run() {
     } catch {}
   }
 
-  const browser = await chromium.launch({
-    headless: true,
-    args: ['--disable-blink-features=AutomationControlled', '--no-sandbox']
+  const res = await fetch('https://jina.ai', {
+    headers: { 'Accept': 'text/plain' }
   });
-  const context = await browser.newContext({
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-    locale: 'es-VE',
-    viewport: { width: 1366, height: 768 }
-  });
-  const page = await context.newPage();
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const text = await res.text();
 
-  await page.goto('https://loteriadehoy.com', {
-    waitUntil: 'domcontentloaded',
-    timeout: 45000
-  });
-
-  // Esperar 6 segundos para superar cualquier pantalla de espera de Cloudflare
-  await page.waitForTimeout(6000);
-
-  const bodyText = await page.evaluate(() => document.body.innerText || '');
-  await browser.close();
-
-  const lines = bodyText
+  const lines = text
     .split('\n')
-    .map((l) => l.trim())
+    .map((l) => l.replace(/^#+\s*/, '').trim())
     .filter((l) => l.length > 0 && l !== '-');
-
-  console.log(`Total líneas leídas: ${lines.length}. Muestra:`, lines.slice(0, 15).join(' | '));
 
   const scraped = [];
   let currentLotteryId = null;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines.at(i);
-
-    // Detectar si entramos en el pie de página
     if (line.startsWith('Quieres hacer publicidad')) break;
 
     const detectedLottery = mapLotteryId(line);
@@ -101,8 +81,6 @@ async function run() {
 
     if (!currentLotteryId) continue;
 
-    // Verificar si la línea actual es "NUMERO ANIMAL" (ej: "11 Gato" o "00 Ballena")
-    // y la siguiente línea es una hora "HH:MM AM/PM"
     const animalMatch = line.match(/^(00|0A|0B|[0-9]{1,2})\s+([A-Za-zÁÉÍÓÚáéíóúÑñ\s]+)$/);
     const nextLine = lines.at(i + 1) || '';
     const drawTime = normalizeTime24(nextLine);
@@ -120,7 +98,7 @@ async function run() {
         animalNum,
         animalName: rawName.trim()
       });
-      i++; // Saltar la línea de la hora ya procesada
+      i++;
     }
   }
 
