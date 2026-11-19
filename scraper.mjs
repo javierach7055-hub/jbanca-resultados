@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { chromium } from 'playwright-core';
 
 function mapLotteryId(h3Text) {
   const n = String(h3Text || '')
@@ -33,44 +34,11 @@ function normalizeTime24(rawTime) {
   const clean = String(rawTime || '').trim().toUpperCase();
   const match = clean.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/);
   if (!match) return null;
-  let hour = parseInt(match[1], 10);
-  const min = match[2];
-  const meridiem = match[3];
+  const [, rawH, min, meridiem] = match;
+  let hour = parseInt(rawH, 10);
   if (meridiem === 'PM' && hour < 12) hour += 12;
   if (meridiem === 'AM' && hour === 12) hour = 0;
   return `${String(hour).padStart(2, '0')}:${min}`;
-}
-
-function parseLoteriaDeHoy(html) {
-  const results = [];
-  const sections = html.split(/<h3[^>]*>/i);
-
-  for (let i = 1; i < sections.length; i++) {
-    const closeH3 = sections[i].search(/<\/h3>/i);
-    if (closeH3 === -1) continue;
-
-    const title = sections[i].slice(0, closeH3).replace(/<[^>]+>/g, ' ').trim();
-    const lotteryId = mapLotteryId(title);
-    if (!lotteryId) continue;
-
-    const body = sections[i].slice(closeH3 + 5);
-    const pairRegex = /<h4[^>]*>\s*(00|0A|0B|[0-9]{1,2})\s+([^<]+)<\/h4>[\s\S]{0,300}?<h5[^>]*>\s*(\d{1,2}:\d{2}\s*(?:AM|PM))\s*<\/h5>/gi;
-    let m;
-    while ((m = pairRegex.exec(body)) !== null) {
-      let animalNum = m[1].trim().toUpperCase();
-      const animalName = m[2].trim();
-      const drawTime = normalizeTime24(m[3]);
-
-      if (animalNum !== '0' && animalNum !== '00' && animalNum !== '0A' && animalNum !== '0B' && animalNum.length === 1) {
-        animalNum = animalNum.padStart(2, '0');
-      }
-
-      if (drawTime && animalNum) {
-        results.push({ lotteryId, drawTime, animalNum, animalName });
-      }
-    }
-  }
-  return results;
 }
 
 async function run() {
@@ -86,20 +54,70 @@ async function run() {
     } catch {}
   }
 
-  const res = await fetch('https://loteriadehoy.com', {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
-      'Accept': 'text/html,application/xhtml+xml'
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext({
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+    locale: 'es-VE'
+  });
+  const page = await context.newPage();
+
+  await page.goto('https://loteriadehoy.com', {
+    waitUntil: 'domcontentloaded',
+    timeout: 45000
+  });
+  await page.waitForSelector('h3', { timeout: 20000 });
+
+  const rawItems = await page.evaluate(() => {
+    const extracted = [];
+    const headings = Array.from(document.querySelectorAll('h3'));
+
+    for (const h3 of headings) {
+      const title = h3.textContent.trim();
+      let el = h3.nextElementSibling;
+      while (el && el.tagName !== 'H3') {
+        const h4s = el.querySelectorAll('h4');
+        const h5s = el.querySelectorAll('h5');
+        if (h4s.length > 0 && h4s.length === h5s.length) {
+          for (let k = 0; k < h4s.length; k++) {
+            extracted.push({
+              title,
+              h4: h4s.item(k).textContent.trim(),
+              h5: h5s.item(k).textContent.trim()
+            });
+          }
+        }
+        el = el.nextElementSibling;
+      }
     }
+    return extracted;
   });
 
-  if (!res.ok) {
-    throw new Error(`Error HTTP ${res.status} al consultar loteriadehoy.com`);
+  await browser.close();
+
+  const scraped = [];
+  for (const item of rawItems) {
+    const lotteryId = mapLotteryId(item.title);
+    if (!lotteryId) continue;
+
+    const match = item.h4.match(/^(00|0A|0B|[0-9]{1,2})\s+(.+)$/i);
+    const drawTime = normalizeTime24(item.h5);
+    if (!match || !drawTime) continue;
+
+    const [, rawNum, rawName] = match;
+    let animalNum = rawNum.toUpperCase();
+    if (animalNum !== '0' && animalNum !== '00' && animalNum !== '0A' && animalNum !== '0B' && animalNum.length === 1) {
+      animalNum = animalNum.padStart(2, '0');
+    }
+
+    scraped.push({
+      lotteryId,
+      drawTime,
+      animalNum,
+      animalName: rawName.trim()
+    });
   }
 
-  const html = await res.text();
-  const scraped = parseLoteriaDeHoy(html);
-  console.log(`Resultados extraídos de loteriadehoy.com: ${scraped.length}`);
+  console.log(`Resultados extraídos con Chrome real: ${scraped.length}`);
 
   const map = new Map();
   for (const item of previous.results) {
@@ -120,4 +138,3 @@ async function run() {
 }
 
 run();
-
