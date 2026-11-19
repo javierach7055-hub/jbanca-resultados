@@ -1,1 +1,48 @@
-
+{
+  "date": "2026-11-19",
+  "updatedAt": "2026-11-19T12:50:34.583Z",
+  "results": [
+    {
+      "lotteryId": "lotto_activo",
+      "drawTime": "08:00",
+      "animalNum": "32",
+      "animalName": "Ardilla"
+    },
+    {
+      "lotteryId": "la_granjita",
+      "drawTime": "08:00",
+      "animalNum": "36",
+      "animalName": "Culebra"
+    },
+    {
+      "lotteryId": "guacharo_activo",
+      "drawTime": "08:00",
+      "animalNum": "37",
+      "animalName": "Tortuga"
+    },
+    {
+      "lotteryId": "guacharito_millonario",
+      "drawTime": "08:30",
+      "animalNum": "06",
+      "animalName": "Rana"
+    },
+    {
+      "lotteryId": "selva_plus",
+      "drawTime": "08:15",
+      "animalNum": "20",
+      "animalName": "Cochino"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "08:30",
+      "animalNum": "15",
+      "animalName": "Zorro"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "08:00",
+      "animalNum": "19",
+      "animalName": "Chivo"
+    }
+  ]
+}
