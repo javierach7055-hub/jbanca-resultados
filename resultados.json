@@ -1,6 +1,6 @@
 {
   "date": "2026-11-19",
-  "updatedAt": "2026-11-19T20:04:32.287Z",
+  "updatedAt": "2026-11-19T20:06:34.387Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -445,6 +445,12 @@
       "drawTime": "16:00",
       "animalNum": "25",
       "animalName": "Gallina"
+    },
+    {
+      "lotteryId": "ruleta_activa",
+      "drawTime": "16:00",
+      "animalNum": "12",
+      "animalName": "Caballo"
     }
   ]
 }
