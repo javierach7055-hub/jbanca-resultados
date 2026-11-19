@@ -1,6 +1,6 @@
 {
   "date": "2026-11-19",
-  "updatedAt": "2026-11-19T19:32:33.874Z",
+  "updatedAt": "2026-11-19T19:34:35.597Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -409,6 +409,12 @@
       "drawTime": "15:15",
       "animalNum": "82",
       "animalName": "Cucaracha"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "15:30",
+      "animalNum": "04",
+      "animalName": "Alacran"
     }
   ]
 }
