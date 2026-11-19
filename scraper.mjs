@@ -34,8 +34,15 @@ function extractTime24(rawLine) {
 }
 
 async function fetchLotteryByDate(lotteryId, slug, dateStr) {
-  const url = ['https:/', 'r.jina.ai', 'https:/', 'loteriadehoy.com', 'animalito', slug, 'resultados', dateStr, ''].join('/');
-  const res = await fetch(url, { headers: { 'Accept': 'text/plain' } });
+  const baseUrl = ['https:/', 'r.jina.ai', 'https:/', 'loteriadehoy.com', 'animalito', slug, 'resultados', dateStr, ''].join('/');
+  const url = `${baseUrl}?nocache=${Date.now()}`;
+
+  const res = await fetch(url, {
+    headers: {
+      'Accept': 'text/plain',
+      'X-No-Cache': 'true'
+    }
+  });
   if (!res.ok) return [];
 
   const text = await res.text();
@@ -52,7 +59,6 @@ async function fetchLotteryByDate(lotteryId, slug, dateStr) {
     const animalMatch = line.match(/^(00|0A|0B|[0-9]{1,2})\s+([A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s]+)$/);
     if (!animalMatch) continue;
 
-    // Busca "HH:MM AM/PM" en las siguientes 3 líneas (incluso si dice "Selva Plus 09:15 AM")
     let drawTime = null;
     for (let offset = 1; offset <= 3; offset++) {
       const candidate = lines.at(i + offset) || '';
@@ -81,7 +87,6 @@ async function fetchLotteryByDate(lotteryId, slug, dateStr) {
 }
 
 async function run() {
-  // Prueba con 2026-11-18; luego lo devolvemos a getCaracasDate()
   const today = getCaracasDate();
   let previous = { date: today, updatedAt: new Date().toISOString(), results: [] };
 
