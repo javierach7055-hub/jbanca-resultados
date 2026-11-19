@@ -43,7 +43,7 @@ function normalizeTime24(rawTime) {
 }
 
 async function run() {
-  // Para esta prueba usamos ayer 2026-11-18; luego lo cambiamos a getCaracasDate()
+  // Prueba con ayer 2026-11-18 (luego lo devolvemos a getCaracasDate())
   const today = '2026-11-18';
   let previous = { date: today, updatedAt: new Date().toISOString(), results: [] };
 
@@ -56,9 +56,10 @@ async function run() {
     } catch {}
   }
 
-  const readerHost = 'https://jina.ai';
-  const targetUrl = `https://loteriadehoy.com{today}/`;
-  const res = await fetch(readerHost + targetUrl, {
+  const fullUrl = ['https:/', 'r.jina.ai', 'https:/', 'loteriadehoy.com', 'animalitos', 'resultados', today, ''].join('/');
+  console.log('Consultando:', fullUrl);
+
+  const res = await fetch(fullUrl, {
     headers: { 'Accept': 'text/plain' }
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
