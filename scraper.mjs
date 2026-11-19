@@ -27,13 +27,14 @@ function mapLotteryFromHeading(rawHeading) {
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
-    .replace(/\(.*?\)/g, '')
+    .replace(/\(.*?\)/g, ' ')
+    .replace(/\s+/g, ' ')
     .trim();
 
   if (clean.startsWith('resultados') || clean.startsWith('quieres hacer')) return null;
 
   for (const [id, rule] of Object.entries(LOTTERY_RULES)) {
-    if (rule.names.some((n) => clean === n)) return id;
+    if (rule.names.some((n) => clean === n || clean.startsWith(n + ' '))) return id;
   }
   return null;
 }
@@ -60,33 +61,18 @@ function isValidForLottery(lotteryId, drawTime, animalNum) {
   return !Number.isNaN(n) && n >= 1 && n <= rule.max;
 }
 
-async function run() {
-  // Prueba con 2026-11-18; luego lo devolvemos a getCaracasDate()
-  const today = '2026-11-18';
-  let previous = { date: today, updatedAt: new Date().toISOString(), results: [] };
-
-  if (fs.existsSync('resultados.json')) {
-    try {
-      const parsed = JSON.parse(fs.readFileSync('resultados.json', 'utf8'));
-      if (parsed.date === today && Array.isArray(parsed.results)) {
-        previous = parsed;
-      }
-    } catch {}
-  }
-
-  const url = ['https:/', 'r.jina.ai', 'https:/', 'loteriadehoy.com', 'animalitos', 'resultados', today, ''].join('/');
+async function scrapePage(url) {
   const res = await fetch(url, { headers: { 'Accept': 'text/plain' } });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) return [];
   const text = await res.text();
 
   const lines = text.split('\n').map((l) => l.trim()).filter(Boolean);
-  const scraped = [];
+  const found = [];
   let currentLotteryId = null;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines.at(i);
 
-    // Solo cambia de lotería cuando encuentra un encabezado real "### Nombre"
     if (line.startsWith('### ')) {
       const heading = line.slice(4).trim();
       currentLotteryId = mapLotteryFromHeading(heading);
@@ -95,7 +81,6 @@ async function run() {
 
     if (!currentLotteryId) continue;
 
-    // Cada tarjeta trae "#### NUMERO NOMBRE" seguido de "##### HH:MM AM/PM"
     const cleanH4 = line.replace(/^####\s*/, '').trim();
     const nextH5 = (lines.at(i + 1) || '').replace(/^#####\s*/, '').trim();
 
@@ -110,7 +95,7 @@ async function run() {
       }
 
       if (isValidForLottery(currentLotteryId, drawTime, animalNum)) {
-        scraped.push({
+        found.push({
           lotteryId: currentLotteryId,
           drawTime,
           animalNum,
@@ -120,15 +105,39 @@ async function run() {
       i++;
     }
   }
+  return found;
+}
 
-  console.log(`Resultados extraídos y verificados: ${scraped.length}`);
+async function run() {
+  // Prueba con 2026-11-18 (luego cambiamos '2026-11-18' por getCaracasDate())
+  const today = '2026-11-18';
+  let previous = { date: today, updatedAt: new Date().toISOString(), results: [] };
+
+  if (fs.existsSync('resultados.json')) {
+    try {
+      const parsed = JSON.parse(fs.readFileSync('resultados.json', 'utf8'));
+      if (parsed.date === today && Array.isArray(parsed.results)) {
+        previous = parsed;
+      }
+    } catch {}
+  }
+
+  const urls = [
+    ['https:/', 'r.jina.ai', 'https:/', 'loteriadehoy.com', 'animalitos', 'resultados', today, ''].join('/'),
+    ['https:/', 'r.jina.ai', 'https:/', 'loteriadehoy.com', 'animalitos', 'resultados-internacional', today, ''].join('/')
+  ];
 
   const map = new Map();
   for (const item of previous.results) {
     map.set(`${item.lotteryId}|${item.drawTime}`, item);
   }
-  for (const item of scraped) {
-    map.set(`${item.lotteryId}|${item.drawTime}`, item);
+
+  for (const url of urls) {
+    const items = await scrapePage(url);
+    console.log(`URL ${url}: ${items.length} resultados`);
+    for (const item of items) {
+      map.set(`${item.lotteryId}|${item.drawTime}`, item);
+    }
   }
 
   const output = {
@@ -138,7 +147,7 @@ async function run() {
   };
 
   fs.writeFileSync('resultados.json', JSON.stringify(output, null, 2), 'utf8');
-  console.log(`Guardado resultados.json con ${output.results.length} resultados para ${today}.`);
+  console.log(`Guardado resultados.json con ${output.results.length} resultados totales para ${today}.`);
 }
 
 run();
