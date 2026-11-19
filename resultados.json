@@ -1,6 +1,6 @@
 {
   "date": "2026-11-19",
-  "updatedAt": "2026-11-19T20:08:34.707Z",
+  "updatedAt": "2026-11-19T20:10:40.752Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -451,6 +451,12 @@
       "drawTime": "16:00",
       "animalNum": "12",
       "animalName": "Caballo"
+    },
+    {
+      "lotteryId": "la_granjita",
+      "drawTime": "16:00",
+      "animalNum": "05",
+      "animalName": "Leon"
     }
   ]
 }
