@@ -1,6 +1,6 @@
 {
   "date": "2026-11-18",
-  "updatedAt": "2026-11-19T04:52:27.840Z",
+  "updatedAt": "2026-11-19T04:59:02.352Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -457,6 +457,204 @@
       "drawTime": "19:00",
       "animalNum": "02",
       "animalName": "Toro"
+    },
+    {
+      "lotteryId": "selva_plus",
+      "drawTime": "09:15",
+      "animalNum": "41",
+      "animalName": "Canguro"
+    },
+    {
+      "lotteryId": "selva_plus",
+      "drawTime": "11:15",
+      "animalNum": "80",
+      "animalName": "Murcielago"
+    },
+    {
+      "lotteryId": "selva_plus",
+      "drawTime": "12:15",
+      "animalNum": "74",
+      "animalName": "Turpial"
+    },
+    {
+      "lotteryId": "selva_plus",
+      "drawTime": "14:15",
+      "animalNum": "78",
+      "animalName": "Antilope"
+    },
+    {
+      "lotteryId": "selva_plus",
+      "drawTime": "15:15",
+      "animalNum": "91",
+      "animalName": "Morrocoy"
+    },
+    {
+      "lotteryId": "selva_plus",
+      "drawTime": "17:15",
+      "animalNum": "48",
+      "animalName": "Puercoespin"
+    },
+    {
+      "lotteryId": "selva_plus",
+      "drawTime": "18:15",
+      "animalNum": "96",
+      "animalName": "Caballito De Mar"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "08:30",
+      "animalNum": "00",
+      "animalName": "Ballena"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "09:30",
+      "animalNum": "26",
+      "animalName": "Vaca"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "10:30",
+      "animalNum": "02",
+      "animalName": "Toro"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "11:30",
+      "animalNum": "19",
+      "animalName": "Chivo"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "12:30",
+      "animalNum": "29",
+      "animalName": "Elefante"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "13:30",
+      "animalNum": "25",
+      "animalName": "Gallina"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "14:30",
+      "animalNum": "04",
+      "animalName": "Alacran"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "15:30",
+      "animalNum": "06",
+      "animalName": "Rana"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "16:30",
+      "animalNum": "01",
+      "animalName": "Carnero"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "17:30",
+      "animalNum": "32",
+      "animalName": "Ardilla"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "18:30",
+      "animalNum": "07",
+      "animalName": "Perico"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "19:30",
+      "animalNum": "34",
+      "animalName": "Venado"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "08:00",
+      "animalNum": "08",
+      "animalName": "Raton"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "09:00",
+      "animalNum": "04",
+      "animalName": "Alacran"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "10:00",
+      "animalNum": "02",
+      "animalName": "Toro"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "11:00",
+      "animalNum": "14",
+      "animalName": "Paloma"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "12:00",
+      "animalNum": "33",
+      "animalName": "Pescado"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "13:00",
+      "animalNum": "22",
+      "animalName": "Camello"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "14:00",
+      "animalNum": "01",
+      "animalName": "Carnero"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "15:00",
+      "animalNum": "03",
+      "animalName": "Ciempies"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "16:00",
+      "animalNum": "13",
+      "animalName": "Mono"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "17:00",
+      "animalNum": "10",
+      "animalName": "Tigre"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "18:00",
+      "animalNum": "01",
+      "animalName": "Carnero"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "19:00",
+      "animalNum": "05",
+      "animalName": "Leon"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "20:00",
+      "animalNum": "34",
+      "animalName": "Venado"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "21:00",
+      "animalNum": "00",
+      "animalName": "Ballena"
     }
   ]
 }
