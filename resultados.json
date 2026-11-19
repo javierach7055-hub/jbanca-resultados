@@ -1,6 +1,6 @@
 {
   "date": "2026-11-19",
-  "updatedAt": "2026-11-19T16:32:24.862Z",
+  "updatedAt": "2026-11-19T16:34:37.232Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -247,6 +247,18 @@
       "drawTime": "12:15",
       "animalNum": "49",
       "animalName": "Pereza"
+    },
+    {
+      "lotteryId": "guacharito_millonario",
+      "drawTime": "12:30",
+      "animalNum": "90",
+      "animalName": "Huron"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "12:30",
+      "animalNum": "03",
+      "animalName": "Ciempies"
     }
   ]
 }
