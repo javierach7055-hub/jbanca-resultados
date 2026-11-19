@@ -1,6 +1,6 @@
 {
   "date": "2026-11-19",
-  "updatedAt": "2026-11-19T18:02:34.456Z",
+  "updatedAt": "2026-11-19T18:04:54.299Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -319,6 +319,18 @@
       "drawTime": "14:00",
       "animalNum": "34",
       "animalName": "Venado"
+    },
+    {
+      "lotteryId": "lotto_activo",
+      "drawTime": "14:00",
+      "animalNum": "29",
+      "animalName": "Elefante"
+    },
+    {
+      "lotteryId": "guacharo_activo",
+      "drawTime": "14:00",
+      "animalNum": "48",
+      "animalName": "Puercoespin"
     }
   ]
 }
