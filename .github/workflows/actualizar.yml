@@ -1,0 +1,32 @@
+name: Actualizar Resultados Animalitos
+
+on:
+  schedule:
+    # Ejecuta cada 5 minutos entre las 8:00 AM y 9:00 PM hora Venezuela (12:00 a 01:00 UTC)
+    - cron: '*/5 12-23,0-1 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Ejecutar robot de resultados
+        run: node scraper.mjs
+
+      - name: Guardar resultados.json si hubo cambios
+        run: |
+          git config user.name "JBanca Bot"
+          git config user.email "bot@jbancapro.local"
+          git add resultados.json
+          git diff --staged --quiet || (git commit -m "Resultados actualizados" && git push)
