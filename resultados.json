@@ -1,6 +1,6 @@
 {
   "date": "2026-11-20",
-  "updatedAt": "2026-11-20T20:06:32.276Z",
+  "updatedAt": "2026-11-20T20:08:49.902Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -445,6 +445,18 @@
       "drawTime": "16:00",
       "animalNum": "04",
       "animalName": "Alacran"
+    },
+    {
+      "lotteryId": "la_granjita",
+      "drawTime": "16:00",
+      "animalNum": "23",
+      "animalName": "Zebra"
+    },
+    {
+      "lotteryId": "ruleta_activa",
+      "drawTime": "16:00",
+      "animalNum": "00",
+      "animalName": "Ballena"
     }
   ]
 }
