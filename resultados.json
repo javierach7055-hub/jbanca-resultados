@@ -1,6 +1,6 @@
 {
   "date": "2026-11-20",
-  "updatedAt": "2026-11-20T12:32:30.845Z",
+  "updatedAt": "2026-11-20T12:34:33.447Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -31,6 +31,18 @@
       "drawTime": "08:15",
       "animalNum": "79",
       "animalName": "Calamar"
+    },
+    {
+      "lotteryId": "guacharito_millonario",
+      "drawTime": "08:30",
+      "animalNum": "20",
+      "animalName": "Cochino"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "08:30",
+      "animalNum": "23",
+      "animalName": "Cebra"
     }
   ]
 }
