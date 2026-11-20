@@ -1,6 +1,6 @@
 {
   "date": "2026-11-20",
-  "updatedAt": "2026-11-20T21:34:29.467Z",
+  "updatedAt": "2026-11-20T21:36:29.146Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -523,6 +523,12 @@
       "drawTime": "17:30",
       "animalNum": "80",
       "animalName": "Murcielago"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "17:30",
+      "animalNum": "13",
+      "animalName": "Mono"
     }
   ]
 }
