@@ -1,6 +1,6 @@
 {
   "date": "2026-11-19",
-  "updatedAt": "2026-11-20T00:16:27.848Z",
+  "updatedAt": "2026-11-20T00:18:31.671Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -643,6 +643,12 @@
       "drawTime": "20:00",
       "animalNum": "05",
       "animalName": "Leon"
+    },
+    {
+      "lotteryId": "selva_plus",
+      "drawTime": "20:15",
+      "animalNum": "70",
+      "animalName": "Bisonte"
     }
   ]
 }
