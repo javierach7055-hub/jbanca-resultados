@@ -1,6 +1,6 @@
 {
   "date": "2026-11-20",
-  "updatedAt": "2026-11-20T19:04:51.245Z",
+  "updatedAt": "2026-11-20T19:06:29.994Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -385,6 +385,18 @@
       "drawTime": "15:00",
       "animalNum": "20",
       "animalName": "Cochino"
+    },
+    {
+      "lotteryId": "la_granjita",
+      "drawTime": "15:00",
+      "animalNum": "32",
+      "animalName": "Ardilla"
+    },
+    {
+      "lotteryId": "chance_animalitos",
+      "drawTime": "15:00",
+      "animalNum": "24",
+      "animalName": "Iguana"
     }
   ]
 }
