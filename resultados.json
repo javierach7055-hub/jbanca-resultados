@@ -1,6 +1,6 @@
 {
   "date": "2026-11-20",
-  "updatedAt": "2026-11-20T18:16:33.018Z",
+  "updatedAt": "2026-11-20T18:18:31.596Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -349,6 +349,12 @@
       "drawTime": "14:00",
       "animalNum": "13",
       "animalName": "Mono"
+    },
+    {
+      "lotteryId": "selva_plus",
+      "drawTime": "14:15",
+      "animalNum": "71",
+      "animalName": "Guacamaya"
     }
   ]
 }
