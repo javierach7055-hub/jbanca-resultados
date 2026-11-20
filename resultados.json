@@ -1,6 +1,6 @@
 {
   "date": "2026-11-20",
-  "updatedAt": "2026-11-20T14:04:29.931Z",
+  "updatedAt": "2026-11-20T14:06:31.955Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -109,6 +109,18 @@
       "drawTime": "10:00",
       "animalNum": "13",
       "animalName": "Mono"
+    },
+    {
+      "lotteryId": "lotto_activo",
+      "drawTime": "10:00",
+      "animalNum": "26",
+      "animalName": "Vaca"
+    },
+    {
+      "lotteryId": "chance_animalitos",
+      "drawTime": "10:00",
+      "animalNum": "11",
+      "animalName": "Gato"
     }
   ]
 }
