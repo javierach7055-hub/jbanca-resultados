@@ -1,6 +1,6 @@
 {
   "date": "2026-11-20",
-  "updatedAt": "2026-11-20T12:16:40.765Z",
+  "updatedAt": "2026-11-20T12:18:29.553Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -25,6 +25,12 @@
       "drawTime": "08:00",
       "animalNum": "36",
       "animalName": "Culebra"
+    },
+    {
+      "lotteryId": "selva_plus",
+      "drawTime": "08:15",
+      "animalNum": "79",
+      "animalName": "Calamar"
     }
   ]
 }
