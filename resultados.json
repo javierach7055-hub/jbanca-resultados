@@ -1,6 +1,6 @@
 {
   "date": "2026-11-20",
-  "updatedAt": "2026-11-20T18:30:38.752Z",
+  "updatedAt": "2026-11-20T18:32:36.283Z",
   "results": [
     {
       "lotteryId": "lotto_activo",
@@ -355,6 +355,12 @@
       "drawTime": "14:15",
       "animalNum": "71",
       "animalName": "Guacamaya"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "14:30",
+      "animalNum": "25",
+      "animalName": "Gallina"
     }
   ]
 }
