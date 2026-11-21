@@ -1,6 +1,6 @@
 {
   "date": "2026-11-21",
-  "updatedAt": "2026-11-21T16:10:20.006Z",
+  "updatedAt": "2026-11-21T16:12:30.782Z",
   "results": [
     {
       "lotteryId": "guacharo_activo",
@@ -229,6 +229,12 @@
       "drawTime": "12:00",
       "animalNum": "15",
       "animalName": "Zorro"
+    },
+    {
+      "lotteryId": "la_granjita",
+      "drawTime": "12:00",
+      "animalNum": "0",
+      "animalName": "Delfin"
     }
   ]
 }
