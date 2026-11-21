@@ -1,6 +1,6 @@
 {
   "date": "2026-11-21",
-  "updatedAt": "2026-11-21T18:28:30.697Z",
+  "updatedAt": "2026-11-21T18:30:36.053Z",
   "results": [
     {
       "lotteryId": "guacharo_activo",
@@ -355,6 +355,12 @@
       "drawTime": "14:15",
       "animalNum": "88",
       "animalName": "Erizo De Mar"
+    },
+    {
+      "lotteryId": "guacharito_millonario",
+      "drawTime": "14:30",
+      "animalNum": "02",
+      "animalName": "Toro"
     }
   ]
 }
