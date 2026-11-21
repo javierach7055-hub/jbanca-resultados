@@ -1,6 +1,6 @@
 {
   "date": "2026-11-21",
-  "updatedAt": "2026-11-21T14:32:33.029Z",
+  "updatedAt": "2026-11-21T14:34:37.290Z",
   "results": [
     {
       "lotteryId": "guacharo_activo",
@@ -145,6 +145,12 @@
       "drawTime": "10:30",
       "animalNum": "63",
       "animalName": "Cangrejo"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "10:30",
+      "animalNum": "24",
+      "animalName": "Iguana"
     }
   ]
 }
