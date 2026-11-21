@@ -1,6 +1,6 @@
 {
   "date": "2026-11-21",
-  "updatedAt": "2026-11-21T14:08:32.260Z",
+  "updatedAt": "2026-11-21T14:10:35.615Z",
   "results": [
     {
       "lotteryId": "guacharo_activo",
@@ -127,6 +127,12 @@
       "drawTime": "10:00",
       "animalNum": "17",
       "animalName": "Pavo"
+    },
+    {
+      "lotteryId": "ruleta_activa",
+      "drawTime": "10:00",
+      "animalNum": "13",
+      "animalName": "Mono"
     }
   ]
 }
