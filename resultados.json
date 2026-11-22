@@ -1,6 +1,6 @@
 {
   "date": "2026-11-22",
-  "updatedAt": "2026-11-22T14:00:42.636Z",
+  "updatedAt": "2026-11-22T14:02:33.778Z",
   "results": [
     {
       "lotteryId": "guacharo_activo",
@@ -97,6 +97,12 @@
       "drawTime": "09:30",
       "animalNum": "29",
       "animalName": "Elefante"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "10:00",
+      "animalNum": "33",
+      "animalName": "Pescado"
     }
   ]
 }
