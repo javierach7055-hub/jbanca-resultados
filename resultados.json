@@ -1,6 +1,6 @@
 {
   "date": "2026-11-23",
-  "updatedAt": "2026-11-23T18:32:42.521Z",
+  "updatedAt": "2026-11-23T18:34:41.641Z",
   "results": [
     {
       "lotteryId": "guacharo_activo",
@@ -361,6 +361,12 @@
       "drawTime": "14:30",
       "animalNum": "70",
       "animalName": "Bisonte"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "14:30",
+      "animalNum": "00",
+      "animalName": "Ballena"
     }
   ]
 }
