@@ -1,6 +1,6 @@
 {
   "date": "2026-11-24",
-  "updatedAt": "2026-11-24T15:02:20.430Z",
+  "updatedAt": "2026-11-24T15:04:47.484Z",
   "results": [
     {
       "lotteryId": "guacharo_activo",
@@ -151,6 +151,36 @@
       "drawTime": "10:30",
       "animalNum": "35",
       "animalName": "Jirafa"
+    },
+    {
+      "lotteryId": "lotto_activo",
+      "drawTime": "11:00",
+      "animalNum": "17",
+      "animalName": "Pavo"
+    },
+    {
+      "lotteryId": "la_granjita",
+      "drawTime": "11:00",
+      "animalNum": "35",
+      "animalName": "Jirafa"
+    },
+    {
+      "lotteryId": "guacharo_activo",
+      "drawTime": "11:00",
+      "animalNum": "66",
+      "animalName": "Lobo"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "11:00",
+      "animalNum": "26",
+      "animalName": "Vaca"
+    },
+    {
+      "lotteryId": "chance_animalitos",
+      "drawTime": "11:00",
+      "animalNum": "19",
+      "animalName": "Cabra"
     }
   ]
 }
