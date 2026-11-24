@@ -1,6 +1,6 @@
 {
   "date": "2026-11-24",
-  "updatedAt": "2026-11-24T14:32:34.649Z",
+  "updatedAt": "2026-11-24T14:34:47.791Z",
   "results": [
     {
       "lotteryId": "guacharo_activo",
@@ -139,6 +139,18 @@
       "drawTime": "10:15",
       "animalNum": "10",
       "animalName": "Tigre"
+    },
+    {
+      "lotteryId": "guacharito_millonario",
+      "drawTime": "10:30",
+      "animalNum": "67",
+      "animalName": "Avestruz"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "10:30",
+      "animalNum": "35",
+      "animalName": "Jirafa"
     }
   ]
 }
