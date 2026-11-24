@@ -1,6 +1,6 @@
 {
   "date": "2026-11-24",
-  "updatedAt": "2026-11-24T14:00:49.725Z",
+  "updatedAt": "2026-11-24T14:02:46.787Z",
   "results": [
     {
       "lotteryId": "guacharo_activo",
@@ -95,6 +95,12 @@
     {
       "lotteryId": "lotto_internacional",
       "drawTime": "09:30",
+      "animalNum": "13",
+      "animalName": "Mono"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "10:00",
       "animalNum": "13",
       "animalName": "Mono"
     }
