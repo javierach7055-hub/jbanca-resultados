@@ -1,6 +1,6 @@
 {
   "date": "2026-11-25",
-  "updatedAt": "2026-11-25T21:06:16.951Z",
+  "updatedAt": "2026-11-25T21:08:31.065Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -493,6 +493,24 @@
       "drawTime": "17:00",
       "animalNum": "08",
       "animalName": "Raton"
+    },
+    {
+      "lotteryId": "lotto_activo",
+      "drawTime": "17:00",
+      "animalNum": "19",
+      "animalName": "Chivo"
+    },
+    {
+      "lotteryId": "la_granjita",
+      "drawTime": "17:00",
+      "animalNum": "04",
+      "animalName": "Alacran"
+    },
+    {
+      "lotteryId": "chance_animalitos",
+      "drawTime": "17:00",
+      "animalNum": "28",
+      "animalName": "Zamuro"
     }
   ]
 }
