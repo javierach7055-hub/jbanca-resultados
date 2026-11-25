@@ -1,6 +1,6 @@
 {
   "date": "2026-11-25",
-  "updatedAt": "2026-11-25T13:32:32.677Z",
+  "updatedAt": "2026-11-25T13:34:29.867Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -85,6 +85,12 @@
       "drawTime": "09:15",
       "animalNum": "98",
       "animalName": "Cocodrilo"
+    },
+    {
+      "lotteryId": "guacharito_millonario",
+      "drawTime": "09:30",
+      "animalNum": "01",
+      "animalName": "Carnero"
     }
   ]
 }
