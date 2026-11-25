@@ -1,6 +1,6 @@
 {
   "date": "2026-11-25",
-  "updatedAt": "2026-11-25T14:04:29.710Z",
+  "updatedAt": "2026-11-25T14:06:28.199Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -121,6 +121,12 @@
       "drawTime": "10:00",
       "animalNum": "63",
       "animalName": "Cangrejo"
+    },
+    {
+      "lotteryId": "chance_animalitos",
+      "drawTime": "10:00",
+      "animalNum": "01",
+      "animalName": "Carnero"
     }
   ]
 }
