@@ -1,6 +1,6 @@
 {
   "date": "2026-11-25",
-  "updatedAt": "2026-11-25T20:02:38.108Z",
+  "updatedAt": "2026-11-25T20:04:32.066Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -433,6 +433,18 @@
       "drawTime": "16:00",
       "animalNum": "35",
       "animalName": "Jirafa"
+    },
+    {
+      "lotteryId": "chance_animalitos",
+      "drawTime": "16:00",
+      "animalNum": "32",
+      "animalName": "Ardilla"
+    },
+    {
+      "lotteryId": "ruleta_activa",
+      "drawTime": "16:00",
+      "animalNum": "16",
+      "animalName": "Oso"
     }
   ]
 }
