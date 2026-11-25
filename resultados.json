@@ -1,6 +1,6 @@
 {
   "date": "2026-11-25",
-  "updatedAt": "2026-11-25T18:32:17.873Z",
+  "updatedAt": "2026-11-25T18:34:30.393Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -355,6 +355,12 @@
       "drawTime": "14:15",
       "animalNum": "07",
       "animalName": "Perico"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "14:30",
+      "animalNum": "36",
+      "animalName": "Culebra"
     }
   ]
 }
