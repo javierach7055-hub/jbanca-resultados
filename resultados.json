@@ -1,6 +1,6 @@
 {
   "date": "2026-11-25",
-  "updatedAt": "2026-11-25T15:32:32.205Z",
+  "updatedAt": "2026-11-25T15:34:30.859Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -199,6 +199,12 @@
       "drawTime": "11:30",
       "animalNum": "64",
       "animalName": "Gavilan"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "11:30",
+      "animalNum": "33",
+      "animalName": "Pescado"
     }
   ]
 }
