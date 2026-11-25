@@ -1,6 +1,6 @@
 {
   "date": "2026-11-25",
-  "updatedAt": "2026-11-25T18:01:00.774Z",
+  "updatedAt": "2026-11-25T18:02:29.709Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -311,6 +311,12 @@
     {
       "lotteryId": "lotto_internacional",
       "drawTime": "13:30",
+      "animalNum": "20",
+      "animalName": "Cochino"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "14:00",
       "animalNum": "20",
       "animalName": "Cochino"
     }
