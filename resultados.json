@@ -1,6 +1,6 @@
 {
   "date": "2026-11-25",
-  "updatedAt": "2026-11-25T18:34:30.393Z",
+  "updatedAt": "2026-11-25T18:36:36.408Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -361,6 +361,12 @@
       "drawTime": "14:30",
       "animalNum": "36",
       "animalName": "Culebra"
+    },
+    {
+      "lotteryId": "guacharito_millonario",
+      "drawTime": "14:30",
+      "animalNum": "51",
+      "animalName": "Pelicano"
     }
   ]
 }
