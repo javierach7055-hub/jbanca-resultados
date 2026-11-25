@@ -1,6 +1,6 @@
 {
   "date": "2026-11-25",
-  "updatedAt": "2026-11-25T21:38:28.556Z",
+  "updatedAt": "2026-11-25T21:40:36.578Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -523,6 +523,12 @@
       "drawTime": "17:30",
       "animalNum": "33",
       "animalName": "Pescado"
+    },
+    {
+      "lotteryId": "guacharito_millonario",
+      "drawTime": "17:30",
+      "animalNum": "58",
+      "animalName": "Hormiga"
     }
   ]
 }
