@@ -1,6 +1,6 @@
 {
   "date": "2026-11-26",
-  "updatedAt": "2026-11-26T20:06:44.058Z",
+  "updatedAt": "2026-11-26T20:08:35.530Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -691,6 +691,18 @@
       "drawTime": "16:00",
       "animalNum": "31",
       "animalName": "Lapa"
+    },
+    {
+      "lotteryId": "condor_gana",
+      "drawTime": "16:00",
+      "animalNum": "28",
+      "animalName": "Zamuro"
+    },
+    {
+      "lotteryId": "tropi_gana",
+      "drawTime": "16:00",
+      "animalNum": "06",
+      "animalName": "Rana"
     }
   ]
 }
