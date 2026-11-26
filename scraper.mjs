@@ -16,21 +16,12 @@ const LOTTERY_SOURCES = [
   { id: 'loto_chaima', source: 'loteriadehoy', slug: 'lotochaima' },
   { id: 'granja_millonaria', source: 'loteriadehoy', slug: 'granjamillionaria' },
 
-  // Cóndor Gana en LottoResultados (funcionando al 100%)
+  // 3 loterías nuevas en LottoResultados (todas desde lottoresultados.com con horarios completos)
   { id: 'condor_gana', source: 'lottoresultados', url: 'https://www.lottoresultados.com/resultados/animalitos/condor-gana' },
-
-  // Tropi Gana con respaldo doble: Centro de Apuestas El Rey (principal) + LottoResultados (fallback)
-  {
-    id: 'tropi_gana',
-    source: 'tropi_dual',
-    primaryUrl: 'https://centrodeapuestaselrey.com.ve/resultados/tropi-gana',
-    fallbackUrl: 'https://www.lottoresultados.com/resultados/animalitos/tropi-gana'
-  },
-
-  // El Granjazo en LottoResultados (con navegador real / browser engine en Jina para evitar bloqueo 403/503)
+  { id: 'tropi_gana', source: 'lottoresultados', url: 'https://www.lottoresultados.com/resultados/animalitos/tropi-gana' },
   { id: 'el_granjazo', source: 'lottoresultados', url: 'https://www.lottoresultados.com/resultados/animalitos/el-granjazo-granja-millonaria' },
 
-  // Fruita Gana en TuAzar (funcionando al 100%)
+  // 1 lotería nueva de frutas en TuAzar
   { id: 'fruita_gana', source: 'tuazar_frutas', url: 'https://resultados.tuazar.com/loteria/frutas/resultados' }
 ];
 
@@ -62,19 +53,33 @@ function extractTime24(rawLine) {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-async function fetchJinaRaw(targetUrl, useBrowserEngine = false) {
-  const jinaUrl = `https://r.jina.ai/${targetUrl}`;
-  const headers = {
-    'Accept': 'text/plain',
-    'X-No-Cache': 'true'
-  };
-  if (useBrowserEngine) {
-    headers['X-Engine'] = 'browser';
-    headers['X-Wait-For-Selector'] = 'h4';
-  }
-  const res = await fetch(jinaUrl, { headers });
+// Descarga HTML directo con User-Agent real (evita bloqueo 429 de r.jina.ai en LottoResultados)
+async function fetchHtmlDirect(targetUrl) {
+  const res = await fetch(targetUrl, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      'Accept-Language': 'es-VE,es;q=0.9,en;q=0.8',
+      'Cache-Control': 'no-cache'
+    }
+  });
   if (!res.ok) {
-    console.warn(`HTTP ${res.status} al consultar ${targetUrl}`);
+    console.warn(`HTTP ${res.status} directo en ${targetUrl}`);
+    return '';
+  }
+  return await res.text();
+}
+
+async function fetchJinaRaw(targetUrl) {
+  const jinaUrl = `https://r.jina.ai/${targetUrl}`;
+  const res = await fetch(jinaUrl, {
+    headers: {
+      'Accept': 'text/plain',
+      'X-No-Cache': 'true'
+    }
+  });
+  if (!res.ok) {
+    console.warn(`HTTP ${res.status} en Jina para ${targetUrl}`);
     return '';
   }
   return await res.text();
@@ -120,70 +125,24 @@ async function fetchFromLoteriaDeHoy(lotteryId, slug, dateStr) {
   return found;
 }
 
-// Parser 2: Centro de Apuestas El Rey (Tropi Gana: "9:00 am" + "![tropi-gana-resultado](.../17_pavo.jpg)" + "Pavo")
-async function fetchFromElReyTropiGana(lotteryId, targetUrl) {
-  const text = await fetchJinaRaw(targetUrl);
-  if (!text) return [];
-
-  const foundMap = new Map();
-  const lines = text
-    .split('\n')
-    .map((l) => l.replace(/^#+\s*/, '').trim())
-    .filter((l) => l.length > 0 && l !== '-');
-
-  for (let i = 0; i < lines.length; i++) {
-    const drawTime = extractTime24(lines[i]);
-    if (!drawTime) continue;
-
-    let animalNum = null;
-    let animalName = null;
-
-    for (let offset = 1; offset <= 3; offset++) {
-      const nextLine = lines[i + offset] || '';
-      const imgMatch = nextLine.match(/\/tropi_gana\/(00|[0-9]{1,2})_([a-zA-Z0-9_-]+)\.(jpg|png|webp)/i);
-      if (imgMatch) {
-        animalNum = imgMatch[1];
-        const nextName = (lines[i + offset + 1] || '').trim();
-        if (nextName && !nextName.startsWith('!') && !extractTime24(nextName)) {
-          animalName = nextName;
-        } else {
-          animalName = imgMatch[2].replace(/[_-]/g, ' ');
-        }
-        break;
-      }
-    }
-
-    if (animalNum !== null && animalName) {
-      foundMap.set(drawTime, {
-        lotteryId,
-        drawTime,
-        animalNum: normalizeAnimalNum(animalNum),
-        animalName: animalName.charAt(0).toUpperCase() + animalName.slice(1)
-      });
-    }
-  }
-
-  return Array.from(foundMap.values());
-}
-
-// Parser 3: LottoResultados (con reintento usando motor de navegador si la primera respuesta viene vacía/rate-limited)
+// Parser 2: LottoResultados (HTML directo sin pasar por Jina + fallback Jina)
 async function fetchFromLottoResultados(lotteryId, targetUrl, dateStr) {
-  let text = await fetchJinaRaw(targetUrl, false);
-  if (!text || !text.includes('Resultados de Hoy')) {
-    await sleep(1500);
-    text = await fetchJinaRaw(targetUrl, true);
+  let content = await fetchHtmlDirect(targetUrl);
+  if (!content) {
+    await sleep(2000);
+    content = await fetchJinaRaw(targetUrl);
   }
-  if (!text) return [];
+  if (!content) return [];
 
   const foundMap = new Map();
 
-  // Método A: alt text exacto "Resultado 61 Turpial de ... el 2026-11-26 a las 09:30"
+  // Método A: atributo alt="Resultado 61 Turpial de ... el 2026-11-26 a las 09:30" (funciona tanto en HTML como en Markdown)
   const altRegex = new RegExp(
     `Resultado\\s+(00|0A|0B|[0-9]{1,2})\\s+([A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+?)\\s+de\\s+.+?\\s+el\\s+${dateStr}\\s+a\\s+las\\s+(\\d{1,2}:\\d{2})`,
     'gi'
   );
   let altMatch;
-  while ((altMatch = altRegex.exec(text)) !== null) {
+  while ((altMatch = altRegex.exec(content)) !== null) {
     const [, rawNum, rawName, rawTime] = altMatch;
     const [hh, mm] = rawTime.split(':');
     const drawTime = `${hh.padStart(2, '0')}:${mm}`;
@@ -195,8 +154,13 @@ async function fetchFromLottoResultados(lotteryId, targetUrl, dateStr) {
     });
   }
 
-  // Método B: líneas dentro de "Resultados de Hoy" hasta "Resultados de Ayer"
-  const lines = text
+  // Método B: limpiar etiquetas HTML y leer bloque "Resultados de Hoy" hasta "Resultados de Ayer"
+  const plainText = content
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, '\n');
+
+  const lines = plainText
     .split('\n')
     .map((l) => l.replace(/^#+\s*/, '').trim())
     .filter((l) => l.length > 0 && l !== '-');
@@ -226,7 +190,7 @@ async function fetchFromLottoResultados(lotteryId, targetUrl, dateStr) {
   return Array.from(foundMap.values());
 }
 
-// Parser 4: TuAzar Frutas
+// Parser 3: TuAzar Frutas
 async function fetchFromTuAzarFrutas(lotteryId, targetUrl) {
   const text = await fetchJinaRaw(targetUrl);
   if (!text) return [];
@@ -304,14 +268,7 @@ async function run() {
       if (src.source === 'loteriadehoy') {
         items = await fetchFromLoteriaDeHoy(src.id, src.slug, today);
       } else if (src.source === 'lottoresultados') {
-        await sleep(1200); // Pausa corta para evitar límite de peticiones simultáneas en LottoResultados
         items = await fetchFromLottoResultados(src.id, src.url, today);
-      } else if (src.source === 'tropi_dual') {
-        items = await fetchFromElReyTropiGana(src.id, src.primaryUrl);
-        if (items.length === 0) {
-          await sleep(1200);
-          items = await fetchFromLottoResultados(src.id, src.fallbackUrl, today);
-        }
       } else if (src.source === 'tuazar_frutas') {
         items = await fetchFromTuAzarFrutas(src.id, src.url);
       }
