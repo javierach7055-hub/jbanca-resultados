@@ -1,6 +1,6 @@
 {
   "date": "2026-11-26",
-  "updatedAt": "2026-11-26T17:08:29.139Z",
+  "updatedAt": "2026-11-26T17:10:32.035Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -289,6 +289,12 @@
       "drawTime": "13:00",
       "animalNum": "06",
       "animalName": "Sapo"
+    },
+    {
+      "lotteryId": "ruleta_activa",
+      "drawTime": "13:00",
+      "animalNum": "34",
+      "animalName": "Venado"
     }
   ]
 }
