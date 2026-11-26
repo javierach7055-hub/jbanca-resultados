@@ -1,6 +1,6 @@
 {
   "date": "2026-11-26",
-  "updatedAt": "2026-11-26T22:00:43.946Z",
+  "updatedAt": "2026-11-26T22:02:45.178Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -829,6 +829,12 @@
       "drawTime": "17:30",
       "animalNum": "83",
       "animalName": "Buho"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "18:00",
+      "animalNum": "16",
+      "animalName": "Oso"
     }
   ]
 }
