@@ -1,6 +1,6 @@
 {
   "date": "2026-11-26",
-  "updatedAt": "2026-11-26T23:28:36.299Z",
+  "updatedAt": "2026-11-26T23:30:45.841Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -991,6 +991,12 @@
       "drawTime": "19:00",
       "animalNum": "21",
       "animalName": "UVA"
+    },
+    {
+      "lotteryId": "guacharito_millonario",
+      "drawTime": "19:30",
+      "animalNum": "40",
+      "animalName": "Avispa"
     }
   ]
 }
