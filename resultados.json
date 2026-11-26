@@ -1,6 +1,6 @@
 {
   "date": "2026-11-26",
-  "updatedAt": "2026-11-26T23:02:33.845Z",
+  "updatedAt": "2026-11-26T23:04:30.554Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -925,6 +925,30 @@
       "drawTime": "19:00",
       "animalNum": "18",
       "animalName": "Burro"
+    },
+    {
+      "lotteryId": "guacharo_activo",
+      "drawTime": "19:00",
+      "animalNum": "0",
+      "animalName": "Delfin"
+    },
+    {
+      "lotteryId": "chance_animalitos",
+      "drawTime": "19:00",
+      "animalNum": "18",
+      "animalName": "Burro"
+    },
+    {
+      "lotteryId": "loto_chaima",
+      "drawTime": "19:00",
+      "animalNum": "15",
+      "animalName": "Zorro"
+    },
+    {
+      "lotteryId": "granja_millonaria",
+      "drawTime": "19:00",
+      "animalNum": "25",
+      "animalName": "Gallina"
     }
   ]
 }
