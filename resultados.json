@@ -1,6 +1,6 @@
 {
   "date": "2026-11-26",
-  "updatedAt": "2026-11-26T18:32:29.467Z",
+  "updatedAt": "2026-11-26T18:35:01.244Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -355,6 +355,18 @@
       "drawTime": "14:15",
       "animalNum": "57",
       "animalName": "Pato"
+    },
+    {
+      "lotteryId": "guacharito_millonario",
+      "drawTime": "14:30",
+      "animalNum": "28",
+      "animalName": "Zamuro"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "14:30",
+      "animalNum": "35",
+      "animalName": "Jirafa"
     }
   ]
 }
