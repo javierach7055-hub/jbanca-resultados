@@ -1,6 +1,6 @@
 {
   "date": "2026-11-26",
-  "updatedAt": "2026-11-26T19:02:47.808Z",
+  "updatedAt": "2026-11-26T19:05:27.837Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -523,6 +523,42 @@
       "drawTime": "15:00",
       "animalNum": "08",
       "animalName": "Raton"
+    },
+    {
+      "lotteryId": "chance_animalitos",
+      "drawTime": "15:00",
+      "animalNum": "03",
+      "animalName": "Ciempies"
+    },
+    {
+      "lotteryId": "tropi_gana",
+      "drawTime": "09:00",
+      "animalNum": "17",
+      "animalName": "Pavo"
+    },
+    {
+      "lotteryId": "tropi_gana",
+      "drawTime": "10:00",
+      "animalNum": "10",
+      "animalName": "Tigre"
+    },
+    {
+      "lotteryId": "tropi_gana",
+      "drawTime": "11:00",
+      "animalNum": "26",
+      "animalName": "Vaca"
+    },
+    {
+      "lotteryId": "tropi_gana",
+      "drawTime": "12:00",
+      "animalNum": "03",
+      "animalName": "Ciempies"
+    },
+    {
+      "lotteryId": "tropi_gana",
+      "drawTime": "13:00",
+      "animalNum": "30",
+      "animalName": "Caimán"
     }
   ]
 }
