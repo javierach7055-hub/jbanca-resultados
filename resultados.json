@@ -1,6 +1,6 @@
 {
   "date": "2026-11-26",
-  "updatedAt": "2026-11-26T23:04:30.554Z",
+  "updatedAt": "2026-11-26T23:06:32.900Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -949,6 +949,24 @@
       "drawTime": "19:00",
       "animalNum": "25",
       "animalName": "Gallina"
+    },
+    {
+      "lotteryId": "lotto_activo",
+      "drawTime": "19:00",
+      "animalNum": "31",
+      "animalName": "Lapa"
+    },
+    {
+      "lotteryId": "condor_gana",
+      "drawTime": "19:00",
+      "animalNum": "54",
+      "animalName": "Grillo"
+    },
+    {
+      "lotteryId": "tropi_gana",
+      "drawTime": "19:00",
+      "animalNum": "13",
+      "animalName": "Mono"
     }
   ]
 }
