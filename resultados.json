@@ -1,6 +1,6 @@
 {
   "date": "2026-11-26",
-  "updatedAt": "2026-11-26T22:04:36.090Z",
+  "updatedAt": "2026-11-26T22:06:41.831Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -859,6 +859,18 @@
       "drawTime": "18:00",
       "animalNum": "02",
       "animalName": "Toro"
+    },
+    {
+      "lotteryId": "lotto_activo",
+      "drawTime": "18:00",
+      "animalNum": "02",
+      "animalName": "Toro"
+    },
+    {
+      "lotteryId": "la_granjita",
+      "drawTime": "18:00",
+      "animalNum": "09",
+      "animalName": "Aguila"
     }
   ]
 }
