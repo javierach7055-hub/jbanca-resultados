@@ -51,7 +51,7 @@ function extractTime24(rawLine) {
   return `${String(hour).padStart(2, '0')}:${min}`;
 }
 
-async function fetchJinaLines(targetUrl) {
+async function fetchJinaRaw(targetUrl) {
   const jinaUrl = `https://r.jina.ai/${targetUrl}?nocache=${Date.now()}`;
   const res = await fetch(jinaUrl, {
     headers: {
@@ -59,20 +59,22 @@ async function fetchJinaLines(targetUrl) {
       'X-No-Cache': 'true'
     }
   });
-  if (!res.ok) return [];
-  const text = await res.text();
-  return text
-    .split('\n')
-    .map((l) => l.replace(/^#+\s*/, '').trim())
-    .filter((l) => l.length > 0 && l !== '-');
+  if (!res.ok) return '';
+  return await res.text();
 }
 
 // Parser 1: LoteriaDeHoy (formato: "16 Oso" seguido en 1..3 líneas de "02:00 PM")
 async function fetchFromLoteriaDeHoy(lotteryId, slug, dateStr) {
   const targetUrl = `https://loteriadehoy.com/animalito/${slug}/resultados/${dateStr}/`;
-  const lines = await fetchJinaLines(targetUrl);
-  const found = [];
+  const text = await fetchJinaRaw(targetUrl);
+  if (!text) return [];
 
+  const lines = text
+    .split('\n')
+    .map((l) => l.replace(/^#+\s*/, '').trim())
+    .filter((l) => l.length > 0 && l !== '-');
+
+  const found = [];
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     if (line.startsWith('Quieres hacer publicidad')) break;
@@ -101,36 +103,72 @@ async function fetchFromLoteriaDeHoy(lotteryId, slug, dateStr) {
   return found;
 }
 
-// Parser 2: LottoResultados (formato: línea "9:00 am" seguida de línea "17 Pavo", detenido antes de "Resultados de Ayer")
-async function fetchFromLottoResultados(lotteryId, targetUrl) {
-  const lines = await fetchJinaLines(targetUrl);
-  const found = [];
+// Parser 2: LottoResultados (usa tanto el alt de imagen "Resultado 17 Pavo ... a las 09:00" como el texto "9:00 am" + "17 Pavo")
+async function fetchFromLottoResultados(lotteryId, targetUrl, dateStr) {
+  const text = await fetchJinaRaw(targetUrl);
+  if (!text) return [];
+
+  const foundMap = new Map();
+
+  // Método A (alt text exacto con fecha de hoy): "Resultado 61 Turpial de ... el 2026-11-26 a las 09:30"
+  const altRegex = new RegExp(
+    `Resultado\\s+(00|0A|0B|[0-9]{1,2})\\s+([A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+?)\\s+de\\s+.+?\\s+el\\s+${dateStr}\\s+a\\s+las\\s+(\\d{1,2}:\\d{2})`,
+    'gi'
+  );
+  let altMatch;
+  while ((altMatch = altRegex.exec(text)) !== null) {
+    const [, rawNum, rawName, rawTime] = altMatch;
+    const [hh, mm] = rawTime.split(':');
+    const drawTime = `${hh.padStart(2, '0')}:${mm}`;
+    foundMap.set(drawTime, {
+      lotteryId,
+      drawTime,
+      animalNum: normalizeAnimalNum(rawNum),
+      animalName: rawName.trim()
+    });
+  }
+
+  // Método B (respaldo por líneas en bloque "Resultados de Hoy")
+  const lines = text
+    .split('\n')
+    .map((l) => l.replace(/^#+\s*/, '').trim())
+    .filter((l) => l.length > 0 && l !== '-');
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     if (line.includes('Resultados de Ayer') || line.includes('Resultados de la semana')) break;
 
     const drawTime = extractTime24(line);
-    if (!drawTime) continue;
+    if (!drawTime || foundMap.has(drawTime)) continue;
 
-    const nextLine = lines[i + 1] || '';
-    const animalMatch = nextLine.match(/^(00|0A|0B|[0-9]{1,2})\s+([A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s]+)$/);
-    if (animalMatch) {
-      found.push({
-        lotteryId,
-        drawTime,
-        animalNum: normalizeAnimalNum(animalMatch[1]),
-        animalName: animalMatch[2].trim()
-      });
+    for (let offset = 1; offset <= 2; offset++) {
+      const candidate = lines[i + offset] || '';
+      const animalMatch = candidate.match(/^(00|0A|0B|[0-9]{1,2})\s+([A-Za-zÁÉÍÓÚáéíóúÑñ\s]+)$/);
+      if (animalMatch) {
+        foundMap.set(drawTime, {
+          lotteryId,
+          drawTime,
+          animalNum: normalizeAnimalNum(animalMatch[1]),
+          animalName: animalMatch[2].trim()
+        });
+        break;
+      }
     }
   }
-  return found;
+
+  return Array.from(foundMap.values());
 }
 
-// Parser 3: TuAzar Frutas (formato: número "5", separador "* -*", nombre "MELÓN", hora "9:00 AM")
+// Parser 3: TuAzar Frutas (detecta ruta de imagen "/fruita_gana/5.png" + nombre + hora, y respaldo por líneas)
 async function fetchFromTuAzarFrutas(lotteryId, targetUrl) {
-  const lines = await fetchJinaLines(targetUrl);
-  const found = [];
+  const text = await fetchJinaRaw(targetUrl);
+  if (!text) return [];
+
+  const foundMap = new Map();
+  const lines = text
+    .split('\n')
+    .map((l) => l.replace(/^#+\s*/, '').trim())
+    .filter((l) => l.length > 0 && l !== '-');
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -139,25 +177,33 @@ async function fetchFromTuAzarFrutas(lotteryId, targetUrl) {
     const drawTime = extractTime24(line);
     if (!drawTime) continue;
 
-    // Buscar hacia atrás el nombre de la fruta y el número (ignorando "* -*")
     let fruitName = null;
     let fruitNum = null;
-    for (let back = 1; back <= 4; back++) {
-      const prev = (lines[i - back] || '').replace(/\*/g, '').replace(/-/g, '').trim();
-      if (!prev || prev === 'Fruta' || prev === 'Fruita Gana') continue;
 
-      if (!fruitName && /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(prev)) {
-        fruitName = prev;
+    for (let back = 1; back <= 5; back++) {
+      const rawPrev = lines[i - back] || '';
+
+      // Detectar número desde URL de imagen si existe: /fruita_gana/5.png
+      const imgMatch = rawPrev.match(/\/fruita_gana\/(00|[0-9]{1,2})\.png/i);
+      if (imgMatch && fruitNum === null) {
+        fruitNum = imgMatch[1];
         continue;
       }
-      if (fruitName && /^(00|[0-9]{1,2})$/.test(prev)) {
-        fruitNum = prev;
-        break;
+
+      const cleanPrev = rawPrev.replace(/\*/g, '').replace(/-/g, '').trim();
+      if (!cleanPrev || cleanPrev === 'Fruta' || cleanPrev === 'Fruita Gana') continue;
+
+      if (!fruitName && /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(cleanPrev)) {
+        fruitName = cleanPrev;
+        continue;
+      }
+      if (fruitNum === null && /^(00|[0-9]{1,2})$/.test(cleanPrev)) {
+        fruitNum = cleanPrev;
       }
     }
 
     if (fruitNum !== null && fruitName) {
-      found.push({
+      foundMap.set(drawTime, {
         lotteryId,
         drawTime,
         animalNum: normalizeAnimalNum(fruitNum),
@@ -165,7 +211,8 @@ async function fetchFromTuAzarFrutas(lotteryId, targetUrl) {
       });
     }
   }
-  return found;
+
+  return Array.from(foundMap.values());
 }
 
 async function run() {
@@ -192,7 +239,7 @@ async function run() {
       if (src.source === 'loteriadehoy') {
         items = await fetchFromLoteriaDeHoy(src.id, src.slug, today);
       } else if (src.source === 'lottoresultados') {
-        items = await fetchFromLottoResultados(src.id, src.url);
+        items = await fetchFromLottoResultados(src.id, src.url, today);
       } else if (src.source === 'tuazar_frutas') {
         items = await fetchFromTuAzarFrutas(src.id, src.url);
       }
