@@ -1,6 +1,6 @@
 {
   "date": "2026-11-26",
-  "updatedAt": "2026-11-26T18:50:49.324Z",
+  "updatedAt": "2026-11-26T18:53:03.838Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -469,6 +469,42 @@
       "drawTime": "13:00",
       "animalNum": "22",
       "animalName": "Camello"
+    },
+    {
+      "lotteryId": "fruita_gana",
+      "drawTime": "09:00",
+      "animalNum": "05",
+      "animalName": "MELÓN"
+    },
+    {
+      "lotteryId": "fruita_gana",
+      "drawTime": "10:00",
+      "animalNum": "20",
+      "animalName": "TORONJA"
+    },
+    {
+      "lotteryId": "fruita_gana",
+      "drawTime": "11:00",
+      "animalNum": "29",
+      "animalName": "NARANJA"
+    },
+    {
+      "lotteryId": "fruita_gana",
+      "drawTime": "12:00",
+      "animalNum": "08",
+      "animalName": "LIMÓN"
+    },
+    {
+      "lotteryId": "fruita_gana",
+      "drawTime": "13:00",
+      "animalNum": "02",
+      "animalName": "GUAYABA"
+    },
+    {
+      "lotteryId": "fruita_gana",
+      "drawTime": "14:00",
+      "animalNum": "08",
+      "animalName": "LIMÓN"
     }
   ]
 }
