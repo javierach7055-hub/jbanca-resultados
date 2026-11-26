@@ -1,6 +1,6 @@
 {
   "date": "2026-11-26",
-  "updatedAt": "2026-11-26T22:32:42.446Z",
+  "updatedAt": "2026-11-26T22:34:39.231Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -907,6 +907,18 @@
       "drawTime": "18:30",
       "animalNum": "56",
       "animalName": "Tiburon"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "18:30",
+      "animalNum": "24",
+      "animalName": "Iguana"
+    },
+    {
+      "lotteryId": "el_granjazo",
+      "drawTime": "18:30",
+      "animalNum": "58",
+      "animalName": "Castor"
     }
   ]
 }
