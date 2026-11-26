@@ -52,7 +52,8 @@ function extractTime24(rawLine) {
 }
 
 async function fetchJinaRaw(targetUrl) {
-  const jinaUrl = `https://r.jina.ai/${targetUrl}?nocache=${Date.now()}`;
+  // Importante: NO agregar ?nocache= a targetUrl porque LottoResultados cambia/vacía la vista si recibe query params
+  const jinaUrl = `https://r.jina.ai/${targetUrl}`;
   const res = await fetch(jinaUrl, {
     headers: {
       'Accept': 'text/plain',
@@ -63,7 +64,7 @@ async function fetchJinaRaw(targetUrl) {
   return await res.text();
 }
 
-// Parser 1: LoteriaDeHoy (formato: "16 Oso" seguido en 1..3 líneas de "02:00 PM")
+// Parser 1: LoteriaDeHoy
 async function fetchFromLoteriaDeHoy(lotteryId, slug, dateStr) {
   const targetUrl = `https://loteriadehoy.com/animalito/${slug}/resultados/${dateStr}/`;
   const text = await fetchJinaRaw(targetUrl);
@@ -103,14 +104,14 @@ async function fetchFromLoteriaDeHoy(lotteryId, slug, dateStr) {
   return found;
 }
 
-// Parser 2: LottoResultados (usa tanto el alt de imagen "Resultado 17 Pavo ... a las 09:00" como el texto "9:00 am" + "17 Pavo")
+// Parser 2: LottoResultados (URL limpia sin query params + detección por alt text y bloque de hoy)
 async function fetchFromLottoResultados(lotteryId, targetUrl, dateStr) {
   const text = await fetchJinaRaw(targetUrl);
   if (!text) return [];
 
   const foundMap = new Map();
 
-  // Método A (alt text exacto con fecha de hoy): "Resultado 61 Turpial de ... el 2026-11-26 a las 09:30"
+  // Método A: alt text exacto "Resultado 61 Turpial de ... el 2026-11-26 a las 09:30"
   const altRegex = new RegExp(
     `Resultado\\s+(00|0A|0B|[0-9]{1,2})\\s+([A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+?)\\s+de\\s+.+?\\s+el\\s+${dateStr}\\s+a\\s+las\\s+(\\d{1,2}:\\d{2})`,
     'gi'
@@ -128,7 +129,7 @@ async function fetchFromLottoResultados(lotteryId, targetUrl, dateStr) {
     });
   }
 
-  // Método B (respaldo por líneas en bloque "Resultados de Hoy")
+  // Método B: líneas dentro de "Resultados de Hoy" hasta "Resultados de Ayer"
   const lines = text
     .split('\n')
     .map((l) => l.replace(/^#+\s*/, '').trim())
@@ -159,7 +160,7 @@ async function fetchFromLottoResultados(lotteryId, targetUrl, dateStr) {
   return Array.from(foundMap.values());
 }
 
-// Parser 3: TuAzar Frutas (detecta ruta de imagen "/fruita_gana/5.png" + nombre + hora, y respaldo por líneas)
+// Parser 3: TuAzar Frutas
 async function fetchFromTuAzarFrutas(lotteryId, targetUrl) {
   const text = await fetchJinaRaw(targetUrl);
   if (!text) return [];
@@ -182,8 +183,6 @@ async function fetchFromTuAzarFrutas(lotteryId, targetUrl) {
 
     for (let back = 1; back <= 5; back++) {
       const rawPrev = lines[i - back] || '';
-
-      // Detectar número desde URL de imagen si existe: /fruita_gana/5.png
       const imgMatch = rawPrev.match(/\/fruita_gana\/(00|[0-9]{1,2})\.png/i);
       if (imgMatch && fruitNum === null) {
         fruitNum = imgMatch[1];
