@@ -1,6 +1,6 @@
 {
   "date": "2026-11-26",
-  "updatedAt": "2026-11-26T19:12:27.158Z",
+  "updatedAt": "2026-11-26T19:15:38.198Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -552,7 +552,7 @@
       "lotteryId": "tropi_gana",
       "drawTime": "12:00",
       "animalNum": "03",
-      "animalName": "Ciempies"
+      "animalName": "Ciempiés"
     },
     {
       "lotteryId": "tropi_gana",
@@ -583,6 +583,54 @@
       "drawTime": "15:00",
       "animalNum": "17",
       "animalName": "Pavo"
+    },
+    {
+      "lotteryId": "ruleta_activa",
+      "drawTime": "15:00",
+      "animalNum": "29",
+      "animalName": "Elefante"
+    },
+    {
+      "lotteryId": "tropi_gana",
+      "drawTime": "14:00",
+      "animalNum": "0",
+      "animalName": "Delfín"
+    },
+    {
+      "lotteryId": "el_granjazo",
+      "drawTime": "09:30",
+      "animalNum": "61",
+      "animalName": "Turpial"
+    },
+    {
+      "lotteryId": "el_granjazo",
+      "drawTime": "10:30",
+      "animalNum": "15",
+      "animalName": "Zorro"
+    },
+    {
+      "lotteryId": "el_granjazo",
+      "drawTime": "11:30",
+      "animalNum": "30",
+      "animalName": "Caimán"
+    },
+    {
+      "lotteryId": "el_granjazo",
+      "drawTime": "12:30",
+      "animalNum": "70",
+      "animalName": "Cangrejo"
+    },
+    {
+      "lotteryId": "el_granjazo",
+      "drawTime": "13:30",
+      "animalNum": "71",
+      "animalName": "Rabipelao"
+    },
+    {
+      "lotteryId": "fruita_gana",
+      "drawTime": "15:00",
+      "animalNum": "22",
+      "animalName": "AVELLANA"
     }
   ]
 }
