@@ -1,6 +1,6 @@
 {
   "date": "2026-11-26",
-  "updatedAt": "2026-11-26T18:38:41.134Z",
+  "updatedAt": "2026-11-26T18:42:23.388Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -367,6 +367,108 @@
       "drawTime": "14:30",
       "animalNum": "35",
       "animalName": "Jirafa"
+    },
+    {
+      "lotteryId": "loto_chaima",
+      "drawTime": "08:00",
+      "animalNum": "52",
+      "animalName": "Pulpo"
+    },
+    {
+      "lotteryId": "loto_chaima",
+      "drawTime": "09:00",
+      "animalNum": "49",
+      "animalName": "Pereza"
+    },
+    {
+      "lotteryId": "loto_chaima",
+      "drawTime": "10:00",
+      "animalNum": "36",
+      "animalName": "Culebra"
+    },
+    {
+      "lotteryId": "loto_chaima",
+      "drawTime": "11:00",
+      "animalNum": "04",
+      "animalName": "Alacran"
+    },
+    {
+      "lotteryId": "loto_chaima",
+      "drawTime": "12:00",
+      "animalNum": "19",
+      "animalName": "Chivo"
+    },
+    {
+      "lotteryId": "loto_chaima",
+      "drawTime": "13:00",
+      "animalNum": "00",
+      "animalName": "Ballena"
+    },
+    {
+      "lotteryId": "loto_chaima",
+      "drawTime": "14:00",
+      "animalNum": "47",
+      "animalName": "Pavo Real"
+    },
+    {
+      "lotteryId": "granja_millonaria",
+      "drawTime": "09:00",
+      "animalNum": "04",
+      "animalName": "Alacran"
+    },
+    {
+      "lotteryId": "granja_millonaria",
+      "drawTime": "10:00",
+      "animalNum": "23",
+      "animalName": "Cebra"
+    },
+    {
+      "lotteryId": "granja_millonaria",
+      "drawTime": "11:00",
+      "animalNum": "13",
+      "animalName": "Mono"
+    },
+    {
+      "lotteryId": "granja_millonaria",
+      "drawTime": "12:00",
+      "animalNum": "30",
+      "animalName": "Caiman"
+    },
+    {
+      "lotteryId": "granja_millonaria",
+      "drawTime": "13:00",
+      "animalNum": "12",
+      "animalName": "Caballo"
+    },
+    {
+      "lotteryId": "condor_gana",
+      "drawTime": "09:00",
+      "animalNum": "49",
+      "animalName": "Pereza"
+    },
+    {
+      "lotteryId": "condor_gana",
+      "drawTime": "10:00",
+      "animalNum": "49",
+      "animalName": "Pereza"
+    },
+    {
+      "lotteryId": "condor_gana",
+      "drawTime": "11:00",
+      "animalNum": "12",
+      "animalName": "Caballo"
+    },
+    {
+      "lotteryId": "condor_gana",
+      "drawTime": "12:00",
+      "animalNum": "68",
+      "animalName": "Jaguar"
+    },
+    {
+      "lotteryId": "condor_gana",
+      "drawTime": "13:00",
+      "animalNum": "22",
+      "animalName": "Camello"
     }
   ]
 }
