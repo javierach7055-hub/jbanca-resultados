@@ -1,6 +1,6 @@
 {
   "date": "2026-11-26",
-  "updatedAt": "2026-11-26T21:02:35.395Z",
+  "updatedAt": "2026-11-26T21:04:32.679Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -757,6 +757,18 @@
       "drawTime": "17:00",
       "animalNum": "18",
       "animalName": "Burro"
+    },
+    {
+      "lotteryId": "lotto_activo",
+      "drawTime": "17:00",
+      "animalNum": "22",
+      "animalName": "Camello"
+    },
+    {
+      "lotteryId": "granja_millonaria",
+      "drawTime": "17:00",
+      "animalNum": "36",
+      "animalName": "Culebra"
     }
   ]
 }
