@@ -16,12 +16,21 @@ const LOTTERY_SOURCES = [
   { id: 'loto_chaima', source: 'loteriadehoy', slug: 'lotochaima' },
   { id: 'granja_millonaria', source: 'loteriadehoy', slug: 'granjamillionaria' },
 
-  // 3 loterías nuevas en LottoResultados
-  { id: 'tropi_gana', source: 'lottoresultados', url: 'https://www.lottoresultados.com/resultados/animalitos/tropi-gana' },
+  // Cóndor Gana en LottoResultados (funcionando al 100%)
   { id: 'condor_gana', source: 'lottoresultados', url: 'https://www.lottoresultados.com/resultados/animalitos/condor-gana' },
+
+  // Tropi Gana con respaldo doble: Centro de Apuestas El Rey (principal) + LottoResultados (fallback)
+  {
+    id: 'tropi_gana',
+    source: 'tropi_dual',
+    primaryUrl: 'https://centrodeapuestaselrey.com.ve/resultados/tropi-gana',
+    fallbackUrl: 'https://www.lottoresultados.com/resultados/animalitos/tropi-gana'
+  },
+
+  // El Granjazo en LottoResultados (con navegador real / browser engine en Jina para evitar bloqueo 403/503)
   { id: 'el_granjazo', source: 'lottoresultados', url: 'https://www.lottoresultados.com/resultados/animalitos/el-granjazo-granja-millonaria' },
 
-  // 1 lotería nueva de frutas en TuAzar
+  // Fruita Gana en TuAzar (funcionando al 100%)
   { id: 'fruita_gana', source: 'tuazar_frutas', url: 'https://resultados.tuazar.com/loteria/frutas/resultados' }
 ];
 
@@ -51,16 +60,23 @@ function extractTime24(rawLine) {
   return `${String(hour).padStart(2, '0')}:${min}`;
 }
 
-async function fetchJinaRaw(targetUrl) {
-  // Importante: NO agregar ?nocache= a targetUrl porque LottoResultados cambia/vacía la vista si recibe query params
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function fetchJinaRaw(targetUrl, useBrowserEngine = false) {
   const jinaUrl = `https://r.jina.ai/${targetUrl}`;
-  const res = await fetch(jinaUrl, {
-    headers: {
-      'Accept': 'text/plain',
-      'X-No-Cache': 'true'
-    }
-  });
-  if (!res.ok) return '';
+  const headers = {
+    'Accept': 'text/plain',
+    'X-No-Cache': 'true'
+  };
+  if (useBrowserEngine) {
+    headers['X-Engine'] = 'browser';
+    headers['X-Wait-For-Selector'] = 'h4';
+  }
+  const res = await fetch(jinaUrl, { headers });
+  if (!res.ok) {
+    console.warn(`HTTP ${res.status} al consultar ${targetUrl}`);
+    return '';
+  }
   return await res.text();
 }
 
@@ -104,9 +120,59 @@ async function fetchFromLoteriaDeHoy(lotteryId, slug, dateStr) {
   return found;
 }
 
-// Parser 2: LottoResultados (URL limpia sin query params + detección por alt text y bloque de hoy)
-async function fetchFromLottoResultados(lotteryId, targetUrl, dateStr) {
+// Parser 2: Centro de Apuestas El Rey (Tropi Gana: "9:00 am" + "![tropi-gana-resultado](.../17_pavo.jpg)" + "Pavo")
+async function fetchFromElReyTropiGana(lotteryId, targetUrl) {
   const text = await fetchJinaRaw(targetUrl);
+  if (!text) return [];
+
+  const foundMap = new Map();
+  const lines = text
+    .split('\n')
+    .map((l) => l.replace(/^#+\s*/, '').trim())
+    .filter((l) => l.length > 0 && l !== '-');
+
+  for (let i = 0; i < lines.length; i++) {
+    const drawTime = extractTime24(lines[i]);
+    if (!drawTime) continue;
+
+    let animalNum = null;
+    let animalName = null;
+
+    for (let offset = 1; offset <= 3; offset++) {
+      const nextLine = lines[i + offset] || '';
+      const imgMatch = nextLine.match(/\/tropi_gana\/(00|[0-9]{1,2})_([a-zA-Z0-9_-]+)\.(jpg|png|webp)/i);
+      if (imgMatch) {
+        animalNum = imgMatch[1];
+        const nextName = (lines[i + offset + 1] || '').trim();
+        if (nextName && !nextName.startsWith('!') && !extractTime24(nextName)) {
+          animalName = nextName;
+        } else {
+          animalName = imgMatch[2].replace(/[_-]/g, ' ');
+        }
+        break;
+      }
+    }
+
+    if (animalNum !== null && animalName) {
+      foundMap.set(drawTime, {
+        lotteryId,
+        drawTime,
+        animalNum: normalizeAnimalNum(animalNum),
+        animalName: animalName.charAt(0).toUpperCase() + animalName.slice(1)
+      });
+    }
+  }
+
+  return Array.from(foundMap.values());
+}
+
+// Parser 3: LottoResultados (con reintento usando motor de navegador si la primera respuesta viene vacía/rate-limited)
+async function fetchFromLottoResultados(lotteryId, targetUrl, dateStr) {
+  let text = await fetchJinaRaw(targetUrl, false);
+  if (!text || !text.includes('Resultados de Hoy')) {
+    await sleep(1500);
+    text = await fetchJinaRaw(targetUrl, true);
+  }
   if (!text) return [];
 
   const foundMap = new Map();
@@ -160,7 +226,7 @@ async function fetchFromLottoResultados(lotteryId, targetUrl, dateStr) {
   return Array.from(foundMap.values());
 }
 
-// Parser 3: TuAzar Frutas
+// Parser 4: TuAzar Frutas
 async function fetchFromTuAzarFrutas(lotteryId, targetUrl) {
   const text = await fetchJinaRaw(targetUrl);
   if (!text) return [];
@@ -238,7 +304,14 @@ async function run() {
       if (src.source === 'loteriadehoy') {
         items = await fetchFromLoteriaDeHoy(src.id, src.slug, today);
       } else if (src.source === 'lottoresultados') {
+        await sleep(1200); // Pausa corta para evitar límite de peticiones simultáneas en LottoResultados
         items = await fetchFromLottoResultados(src.id, src.url, today);
+      } else if (src.source === 'tropi_dual') {
+        items = await fetchFromElReyTropiGana(src.id, src.primaryUrl);
+        if (items.length === 0) {
+          await sleep(1200);
+          items = await fetchFromLottoResultados(src.id, src.fallbackUrl, today);
+        }
       } else if (src.source === 'tuazar_frutas') {
         items = await fetchFromTuAzarFrutas(src.id, src.url);
       }
