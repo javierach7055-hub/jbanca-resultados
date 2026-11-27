@@ -1,6 +1,6 @@
 {
   "date": "2026-11-27",
-  "updatedAt": "2026-11-27T17:04:38.399Z",
+  "updatedAt": "2026-11-27T17:06:37.702Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -487,6 +487,18 @@
       "drawTime": "13:00",
       "animalNum": "25",
       "animalName": "Gallina"
+    },
+    {
+      "lotteryId": "chance_animalitos",
+      "drawTime": "13:00",
+      "animalNum": "14",
+      "animalName": "Paloma"
+    },
+    {
+      "lotteryId": "ruleta_activa",
+      "drawTime": "13:00",
+      "animalNum": "33",
+      "animalName": "Pescado"
     }
   ]
 }
