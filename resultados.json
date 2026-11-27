@@ -1,6 +1,6 @@
 {
   "date": "2026-11-26",
-  "updatedAt": "2026-11-27T00:02:39.485Z",
+  "updatedAt": "2026-11-27T00:04:39.910Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -1015,6 +1015,12 @@
       "drawTime": "20:00",
       "animalNum": "06",
       "animalName": "Rana"
+    },
+    {
+      "lotteryId": "granja_millonaria",
+      "drawTime": "20:00",
+      "animalNum": "38",
+      "animalName": "Conejo"
     }
   ]
 }
