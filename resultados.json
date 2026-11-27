@@ -1,6 +1,6 @@
 {
   "date": "2026-11-27",
-  "updatedAt": "2026-11-27T19:06:17.240Z",
+  "updatedAt": "2026-11-27T19:08:39.898Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -631,6 +631,30 @@
       "drawTime": "15:00",
       "animalNum": "37",
       "animalName": "Tortuga"
+    },
+    {
+      "lotteryId": "lotto_activo",
+      "drawTime": "15:00",
+      "animalNum": "01",
+      "animalName": "Carnero"
+    },
+    {
+      "lotteryId": "la_granjita",
+      "drawTime": "15:00",
+      "animalNum": "05",
+      "animalName": "Leon"
+    },
+    {
+      "lotteryId": "condor_gana",
+      "drawTime": "15:00",
+      "animalNum": "39",
+      "animalName": "Lechuza"
+    },
+    {
+      "lotteryId": "tropi_gana",
+      "drawTime": "15:00",
+      "animalNum": "29",
+      "animalName": "Elefante"
     }
   ]
 }
