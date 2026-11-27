@@ -1,6 +1,6 @@
 {
   "date": "2026-11-27",
-  "updatedAt": "2026-11-27T20:36:17.496Z",
+  "updatedAt": "2026-11-27T20:38:32.993Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -751,6 +751,12 @@
       "drawTime": "16:30",
       "animalNum": "31",
       "animalName": "Lapa"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "16:30",
+      "animalNum": "09",
+      "animalName": "Aguila"
     }
   ]
 }
