@@ -1,6 +1,6 @@
 {
   "date": "2026-11-27",
-  "updatedAt": "2026-11-27T18:16:40.331Z",
+  "updatedAt": "2026-11-27T18:18:49.074Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -583,6 +583,12 @@
       "drawTime": "14:00",
       "animalNum": "06",
       "animalName": "Rana"
+    },
+    {
+      "lotteryId": "selva_plus",
+      "drawTime": "14:15",
+      "animalNum": "98",
+      "animalName": "Cocodrilo"
     }
   ]
 }
