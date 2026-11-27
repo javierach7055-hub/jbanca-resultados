@@ -1,6 +1,6 @@
 {
   "date": "2026-11-27",
-  "updatedAt": "2026-11-27T21:32:32.933Z",
+  "updatedAt": "2026-11-27T21:34:34.326Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -829,6 +829,12 @@
       "drawTime": "17:30",
       "animalNum": "50",
       "animalName": "Canario"
+    },
+    {
+      "lotteryId": "el_granjazo",
+      "drawTime": "17:30",
+      "animalNum": "60",
+      "animalName": "Tiburón"
     }
   ]
 }
