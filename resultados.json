@@ -1,6 +1,6 @@
 {
   "date": "2026-11-27",
-  "updatedAt": "2026-11-27T18:32:36.668Z",
+  "updatedAt": "2026-11-27T18:34:37.597Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -589,6 +589,12 @@
       "drawTime": "14:15",
       "animalNum": "98",
       "animalName": "Cocodrilo"
+    },
+    {
+      "lotteryId": "guacharito_millonario",
+      "drawTime": "14:30",
+      "animalNum": "86",
+      "animalName": "Buey"
     }
   ]
 }
