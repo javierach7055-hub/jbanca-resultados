@@ -1,6 +1,6 @@
 {
   "date": "2026-11-27",
-  "updatedAt": "2026-11-27T16:36:46.445Z",
+  "updatedAt": "2026-11-27T16:38:33.477Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -439,6 +439,12 @@
       "drawTime": "12:30",
       "animalNum": "36",
       "animalName": "Culebra"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "12:00",
+      "animalNum": "14",
+      "animalName": "Paloma"
     }
   ]
 }
