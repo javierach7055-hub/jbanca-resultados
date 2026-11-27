@@ -1,6 +1,6 @@
 {
   "date": "2026-11-26",
-  "updatedAt": "2026-11-27T00:18:18.994Z",
+  "updatedAt": "2026-11-27T00:20:41.104Z",
   "results": [
     {
       "lotteryId": "lotto_rd",
@@ -1021,6 +1021,12 @@
       "drawTime": "20:00",
       "animalNum": "38",
       "animalName": "Conejo"
+    },
+    {
+      "lotteryId": "selva_plus",
+      "drawTime": "20:15",
+      "animalNum": "08",
+      "animalName": "Raton"
     }
   ]
 }
