@@ -1,6 +1,6 @@
 {
   "date": "2026-11-27",
-  "updatedAt": "2026-11-27T15:14:32.834Z",
+  "updatedAt": "2026-11-27T15:16:32.301Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -17,8 +17,8 @@
     {
       "lotteryId": "fruita_gana",
       "drawTime": "11:00",
-      "animalNum": "29",
-      "animalName": "NARANJA"
+      "animalNum": "12",
+      "animalName": "MANGO"
     },
     {
       "lotteryId": "fruita_gana",
