@@ -1,6 +1,6 @@
 {
   "date": "2026-11-27",
-  "updatedAt": "2026-11-27T22:02:40.237Z",
+  "updatedAt": "2026-11-27T22:04:34.585Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -847,6 +847,30 @@
       "drawTime": "18:00",
       "animalNum": "29",
       "animalName": "Elefante"
+    },
+    {
+      "lotteryId": "guacharo_activo",
+      "drawTime": "18:00",
+      "animalNum": "55",
+      "animalName": "Oso Hormiguero"
+    },
+    {
+      "lotteryId": "chance_animalitos",
+      "drawTime": "18:00",
+      "animalNum": "37",
+      "animalName": "Bufalo"
+    },
+    {
+      "lotteryId": "loto_chaima",
+      "drawTime": "18:00",
+      "animalNum": "44",
+      "animalName": "Chiguire"
+    },
+    {
+      "lotteryId": "granja_millonaria",
+      "drawTime": "18:00",
+      "animalNum": "12",
+      "animalName": "Caballo"
     }
   ]
 }
