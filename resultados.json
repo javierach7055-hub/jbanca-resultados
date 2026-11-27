@@ -1,6 +1,6 @@
 {
   "date": "2026-11-27",
-  "updatedAt": "2026-11-27T23:38:18.268Z",
+  "updatedAt": "2026-11-27T23:40:39.935Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -1003,6 +1003,12 @@
       "drawTime": "19:30",
       "animalNum": "32",
       "animalName": "Ardilla"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "19:30",
+      "animalNum": "26",
+      "animalName": "Vaca"
     }
   ]
 }
