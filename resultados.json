@@ -1,6 +1,6 @@
 {
   "date": "2026-11-27",
-  "updatedAt": "2026-11-27T23:02:45.869Z",
+  "updatedAt": "2026-11-27T23:04:34.612Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -943,6 +943,18 @@
       "drawTime": "19:00",
       "animalNum": "49",
       "animalName": "Pereza"
+    },
+    {
+      "lotteryId": "chance_animalitos",
+      "drawTime": "19:00",
+      "animalNum": "13",
+      "animalName": "Mono"
+    },
+    {
+      "lotteryId": "granja_millonaria",
+      "drawTime": "19:00",
+      "animalNum": "33",
+      "animalName": "Pescado"
     }
   ]
 }
