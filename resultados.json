@@ -1,6 +1,6 @@
 {
   "date": "2026-11-27",
-  "updatedAt": "2026-11-27T21:04:43.052Z",
+  "updatedAt": "2026-11-27T21:06:43.420Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -787,6 +787,18 @@
       "drawTime": "17:00",
       "animalNum": "03",
       "animalName": "Ciempies"
+    },
+    {
+      "lotteryId": "lotto_activo",
+      "drawTime": "17:00",
+      "animalNum": "06",
+      "animalName": "Rana"
+    },
+    {
+      "lotteryId": "la_granjita",
+      "drawTime": "17:00",
+      "animalNum": "11",
+      "animalName": "Gato"
     }
   ]
 }
