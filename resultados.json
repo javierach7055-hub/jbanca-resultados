@@ -1,6 +1,6 @@
 {
   "date": "2026-11-27",
-  "updatedAt": "2026-11-27T13:32:33.601Z",
+  "updatedAt": "2026-11-27T13:35:00.998Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -181,6 +181,18 @@
       "drawTime": "09:15",
       "animalNum": "74",
       "animalName": "Turpial"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "09:30",
+      "animalNum": "14",
+      "animalName": "Paloma"
+    },
+    {
+      "lotteryId": "el_granjazo",
+      "drawTime": "09:30",
+      "animalNum": "70",
+      "animalName": "Cangrejo"
     }
   ]
 }
