@@ -1,6 +1,6 @@
 {
   "date": "2026-11-27",
-  "updatedAt": "2026-11-27T23:14:52.112Z",
+  "updatedAt": "2026-11-27T23:16:32.458Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -65,8 +65,8 @@
     {
       "lotteryId": "fruita_gana",
       "drawTime": "19:00",
-      "animalNum": "21",
-      "animalName": "UVA"
+      "animalNum": "11",
+      "animalName": "MEREY"
     },
     {
       "lotteryId": "lotto_rd",
@@ -985,6 +985,12 @@
       "drawTime": "19:00",
       "animalNum": "35",
       "animalName": "Jirafa"
+    },
+    {
+      "lotteryId": "selva_plus",
+      "drawTime": "19:15",
+      "animalNum": "12",
+      "animalName": "Caballo"
     }
   ]
 }
