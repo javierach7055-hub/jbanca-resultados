@@ -1,6 +1,6 @@
 {
   "date": "2026-11-28",
-  "updatedAt": "2026-11-28T16:04:37.086Z",
+  "updatedAt": "2026-11-28T16:06:30.768Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -403,6 +403,12 @@
       "drawTime": "12:00",
       "animalNum": "38",
       "animalName": "Conejo"
+    },
+    {
+      "lotteryId": "lotto_activo",
+      "drawTime": "12:00",
+      "animalNum": "13",
+      "animalName": "Mono"
     }
   ]
 }
