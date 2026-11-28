@@ -1,6 +1,6 @@
 {
   "date": "2026-11-28",
-  "updatedAt": "2026-11-28T14:04:49.187Z",
+  "updatedAt": "2026-11-28T14:06:51.185Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -229,6 +229,30 @@
       "drawTime": "10:00",
       "animalNum": "36",
       "animalName": "Culebra"
+    },
+    {
+      "lotteryId": "chance_animalitos",
+      "drawTime": "10:00",
+      "animalNum": "08",
+      "animalName": "Raton"
+    },
+    {
+      "lotteryId": "loto_chaima",
+      "drawTime": "10:00",
+      "animalNum": "0",
+      "animalName": "Delfin"
+    },
+    {
+      "lotteryId": "condor_gana",
+      "drawTime": "10:00",
+      "animalNum": "28",
+      "animalName": "Zamuro"
+    },
+    {
+      "lotteryId": "tropi_gana",
+      "drawTime": "10:00",
+      "animalNum": "20",
+      "animalName": "Cochino"
     }
   ]
 }
