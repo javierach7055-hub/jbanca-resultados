@@ -1,6 +1,6 @@
 {
   "date": "2026-11-28",
-  "updatedAt": "2026-11-28T12:01:00.126Z",
+  "updatedAt": "2026-11-28T12:02:32.017Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -67,6 +67,24 @@
       "drawTime": "19:00",
       "animalNum": "11",
       "animalName": "MEREY"
+    },
+    {
+      "lotteryId": "guacharo_activo",
+      "drawTime": "08:00",
+      "animalNum": "52",
+      "animalName": "Pulpo"
+    },
+    {
+      "lotteryId": "lotto_rd",
+      "drawTime": "08:00",
+      "animalNum": "07",
+      "animalName": "Perico"
+    },
+    {
+      "lotteryId": "loto_chaima",
+      "drawTime": "08:00",
+      "animalNum": "44",
+      "animalName": "Chiguire"
     }
   ]
 }
