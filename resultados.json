@@ -1,6 +1,6 @@
 {
   "date": "2026-11-28",
-  "updatedAt": "2026-11-28T15:08:40.657Z",
+  "updatedAt": "2026-11-28T15:10:55.104Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -337,6 +337,12 @@
       "drawTime": "11:00",
       "animalNum": "12",
       "animalName": "Caballo"
+    },
+    {
+      "lotteryId": "ruleta_activa",
+      "drawTime": "11:00",
+      "animalNum": "29",
+      "animalName": "Elefante"
     }
   ]
 }
