@@ -1,6 +1,6 @@
 {
   "date": "2026-11-28",
-  "updatedAt": "2026-11-28T13:06:38.853Z",
+  "updatedAt": "2026-11-28T13:08:38.907Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -157,6 +157,18 @@
       "drawTime": "09:00",
       "animalNum": "04",
       "animalName": "Alacran"
+    },
+    {
+      "lotteryId": "condor_gana",
+      "drawTime": "09:00",
+      "animalNum": "47",
+      "animalName": "Pavo Real"
+    },
+    {
+      "lotteryId": "tropi_gana",
+      "drawTime": "09:00",
+      "animalNum": "0",
+      "animalName": "Delfín"
     }
   ]
 }
