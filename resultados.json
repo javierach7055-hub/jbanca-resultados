@@ -1,6 +1,6 @@
 {
   "date": "2026-11-28",
-  "updatedAt": "2026-11-28T12:06:32.161Z",
+  "updatedAt": "2026-11-28T12:08:39.860Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -88,6 +88,12 @@
     },
     {
       "lotteryId": "la_granjita",
+      "drawTime": "08:00",
+      "animalNum": "22",
+      "animalName": "Camello"
+    },
+    {
+      "lotteryId": "lotto_activo",
       "drawTime": "08:00",
       "animalNum": "22",
       "animalName": "Camello"
