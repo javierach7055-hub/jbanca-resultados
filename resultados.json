@@ -1,6 +1,6 @@
 {
   "date": "2026-11-28",
-  "updatedAt": "2026-11-28T15:32:33.627Z",
+  "updatedAt": "2026-11-28T15:34:56.731Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -349,6 +349,24 @@
       "drawTime": "11:15",
       "animalNum": "92",
       "animalName": "Cisne"
+    },
+    {
+      "lotteryId": "guacharito_millonario",
+      "drawTime": "11:30",
+      "animalNum": "44",
+      "animalName": "Chiguire"
+    },
+    {
+      "lotteryId": "lotto_internacional",
+      "drawTime": "11:30",
+      "animalNum": "03",
+      "animalName": "Ciempies"
+    },
+    {
+      "lotteryId": "el_granjazo",
+      "drawTime": "11:30",
+      "animalNum": "09",
+      "animalName": "águila"
     }
   ]
 }
