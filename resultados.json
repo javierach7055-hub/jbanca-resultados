@@ -1,6 +1,6 @@
 {
   "date": "2026-11-28",
-  "updatedAt": "2026-11-28T15:04:39.480Z",
+  "updatedAt": "2026-11-28T15:06:42.117Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -319,6 +319,12 @@
       "drawTime": "11:00",
       "animalNum": "23",
       "animalName": "Cebra"
+    },
+    {
+      "lotteryId": "lotto_activo",
+      "drawTime": "11:00",
+      "animalNum": "18",
+      "animalName": "Burro"
     }
   ]
 }
