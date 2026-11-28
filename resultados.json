@@ -1,6 +1,6 @@
 {
   "date": "2026-11-28",
-  "updatedAt": "2026-11-28T14:32:36.360Z",
+  "updatedAt": "2026-11-28T14:34:48.194Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -265,6 +265,18 @@
       "drawTime": "10:15",
       "animalNum": "91",
       "animalName": "Morrocoy"
+    },
+    {
+      "lotteryId": "guacharito_millonario",
+      "drawTime": "10:30",
+      "animalNum": "59",
+      "animalName": "Pantera"
+    },
+    {
+      "lotteryId": "el_granjazo",
+      "drawTime": "10:30",
+      "animalNum": "29",
+      "animalName": "Elefante"
     }
   ]
 }
