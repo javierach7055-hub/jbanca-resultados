@@ -1,6 +1,6 @@
 {
   "date": "2026-11-28",
-  "updatedAt": "2026-11-28T16:18:37.825Z",
+  "updatedAt": "2026-11-28T16:20:41.395Z",
   "results": [
     {
       "lotteryId": "fruita_gana",
@@ -427,6 +427,12 @@
       "drawTime": "12:00",
       "animalNum": "20",
       "animalName": "Cochino"
+    },
+    {
+      "lotteryId": "selva_plus",
+      "drawTime": "12:15",
+      "animalNum": "73",
+      "animalName": "Hipopotamo"
     }
   ]
 }
